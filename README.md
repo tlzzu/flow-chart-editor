@@ -9,10 +9,15 @@
 基于[cytoscape.js](https://github.com/cytoscape/cytoscape.js)的流程设计器，优点是可以在流程节点中嵌套子流程，支持实/虚线、连线弯曲、撤销重做、放大缩小，导出json/png/jpg文档等。[演示文档Demo](https://tlzzu.github.io/flow-chart-editor/dist/index.html)
 
 [预览-Preview](#预览-Preview)
+
 [安装使用-Install](#安装使用-Install)
+
 [文档-Document](#文档-Document)
+
 [依赖-Dependencies](#依赖-Dependencies)
+
 [捐赠-Donation](#捐赠-Donation)
+
 [许可证-LICENSE](#许可证-LICENSE)
 
 
