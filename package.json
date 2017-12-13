@@ -43,12 +43,11 @@
   },
   "dependencies": {
     "copy-webpack-plugin": "^4.2.3",
-    "cytoscape": "*",
+    "cytoscape": "^3.2.0",
     "cytoscape-context-menus": "^3.0.5",
     "cytoscape-edge-bend-editing": "^1.5.4",
     "cytoscape-edgehandles": "^3.0.2",
     "cytoscape-grid-guide": "^2.0.5",
-    "cytoscape-undo-redo": "^1.2.14",
     "cytoscape-view-utilities": "^2.0.7",
     "cytoscape.js-undo-redo": "^1.0.1",
     "eslint-friendly-formatter": "^3.0.0",
