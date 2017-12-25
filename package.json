@@ -1,6 +1,6 @@
 {
   "name": "flow-chart-editor",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "description": "流程设计器",
   "homepage": "http://flowcharteditor.sodiao.org",
@@ -51,7 +51,6 @@
     "cytoscape-view-utilities": "^2.0.7",
     "cytoscape.js-undo-redo": "^1.0.1",
     "eslint-friendly-formatter": "^3.0.0",
-    "eslint-loader": "^1.9.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "jquery": "^3.2.1"
   },
@@ -69,7 +68,6 @@
     "eslint": "^4.2.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-friendly-formatter": "^3.0.0",
-    "eslint-loader": "^1.9.0",
     "eslint-plugin-html": "^3.1.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-node": "^4.2.2",
