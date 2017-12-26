@@ -1,7 +1,6 @@
 var fce
 window.onload = function() {
-  fce = new FCE({ id: document.getElementById('fce') })
-  debugger
+    fce = new FCE({ id: document.getElementById('fce') })
 }
 
 // var fce

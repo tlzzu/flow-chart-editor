@@ -42,6 +42,7 @@
     "build": "webpack --config ./build/webpack.config.prod.js"
   },
   "dependencies": {
+    "autoprefixer-loader": "^3.2.0",
     "copy-webpack-plugin": "^4.2.3",
     "cytoscape": "^3.2.0",
     "cytoscape-context-menus": "^3.0.5",
@@ -52,7 +53,8 @@
     "cytoscape.js-undo-redo": "^1.0.1",
     "eslint-friendly-formatter": "^3.0.0",
     "extract-text-webpack-plugin": "^3.0.2",
-    "jquery": "^3.2.1"
+    "jquery": "^3.2.1",
+    "sass-loader": "^6.0.6"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
@@ -64,7 +66,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "babel-runtime": "^6.23.0",
-    "css-loader": "^0.28.4",
+    "css-loader": "^0.28.7",
     "eslint": "^4.2.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-friendly-formatter": "^3.0.0",
@@ -73,7 +75,7 @@
     "eslint-plugin-node": "^4.2.2",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
-    "extract-text-webpack-plugin": "^3.0.0",
+    "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^0.11.2",
     "handlebars": "^4.0.10",
     "handlebars-loader": "^1.5.0",
@@ -83,7 +85,9 @@
     "less": "^2.7.2",
     "less-loader": "^4.0.4",
     "lodash": "^4.17.4",
+    "node-sass": "^4.7.2",
     "optimize-css-assets-webpack-plugin": "^2.0.0",
+    "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack": "^3.3.0",
