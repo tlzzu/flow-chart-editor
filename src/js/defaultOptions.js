@@ -2,7 +2,7 @@
  * 默认配置信息
  */
 const defaultOptions = {
-    id: null,
+    el: null,
     ready() {
       console.log('fce加载完成！')
     },

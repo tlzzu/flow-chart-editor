@@ -1,6 +1,6 @@
 var fce
 window.onload = function() {
-    fce = new FCE({ id: document.getElementById('fce') })
+  fce = new FCE({ el: document.getElementById('fce') })
 }
 
 // var fce
