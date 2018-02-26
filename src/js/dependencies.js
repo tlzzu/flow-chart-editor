@@ -1,11 +1,11 @@
-import cytoscape from 'cytoscape'
-import cytoscape_grid from 'cytoscape-grid-guide'
-import edgehandles from 'cytoscape-edgehandles'
-import contextMenus from 'cytoscape-context-menus'
-import edgeBendEditing from 'cytoscape-edge-bend-editing'
-import undoRedo from 'cytoscape-undo-redo'
-import viewUtilities from 'cytoscape-view-utilities'
-import jquery from 'jquery'
+import cytoscape from "cytoscape";
+import cytoscape_grid from "cytoscape-grid-guide";
+import edgehandles from "cytoscape-edgehandles";
+import contextMenus from "cytoscape-context-menus";
+import edgeBendEditing from "cytoscape-edge-bend-editing";
+import undoRedo from "cytoscape-undo-redo";
+import viewUtilities from "cytoscape-view-utilities";
+import jquery from "jquery";
 // var cytoscape = require('cytoscape')
 // var cytoscape_grid = require('cytoscape-grid-guide')
 // var edgehandles = require('cytoscape-edgehandles')
@@ -14,13 +14,13 @@ import jquery from 'jquery'
 // var undoRedo = require('cytoscape-undo-redo')
 // var viewUtilities = require('cytoscape-view-utilities')
 // var jquery = require('jquery')
-window.$ = jquery
-cytoscape_grid(cytoscape, jquery)
-contextMenus(cytoscape, jquery)
-edgeBendEditing(cytoscape, jquery)
-undoRedo(cytoscape)
-viewUtilities(cytoscape, jquery)
-cytoscape.use(edgehandles)
+window.$ = jquery;
+cytoscape_grid(cytoscape, jquery);
+contextMenus(cytoscape, jquery);
+edgeBendEditing(cytoscape, jquery);
+undoRedo(cytoscape);
+viewUtilities(cytoscape, jquery);
+cytoscape.use(edgehandles);
 export default {
   cytoscape,
   cytoscape_grid,
@@ -30,4 +30,4 @@ export default {
   undoRedo,
   viewUtilities,
   jquery
-}
+};

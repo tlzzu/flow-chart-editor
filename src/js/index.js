@@ -1,64 +1,25 @@
-'use strict'
-import defOptions from './defaultOptions'
-import deps from './dependencies'
-require('../css/default.scss')
+"use strict";
+import defOptions from "./defaultOptions";
+import deps from "./dependencies";
+import listener from "./core/listener";
+import nav from "./navbars/index";
+import fceDom from "./core/dom";
+require("../css/default.scss");
 
-// 事件及对应触发函数
-let _event = {}, // 存放事件
-  toolbars = [],
-  rightMenus = [],
-  cy_dom = null,
-  toolbars_dom = null,
-  zoom_dom = null,
-  footer_dom = null,
-  cy = null
 let FCE = function(options) {
-  let opt = deps.jquery.extend(true, defOptions.defaultOptions, options),
-    dom = document.createElement('div')
-  dom.classList.add('fce')
-  if (!dom) {
-    console.log('页面中不存在用于承载fce对象的dom元素')
-    return
+  const opt = deps.jquery.extend(true, defOptions.defaultOptions, options);
+  // rootElement = document.createElement("div");
+  // rootElement.classList.add("fce");
+  if (!opt || !opt.el) {
+    console.log("页面中不存在用于承载fce对象的dom元素");
+    return;
+  } else if (opt.el && typeof opt.el === "string") {
+    opt.el = document.querySelector("#" + opt.el);
   }
-
-  if (opt.toolbars && opt.toolbars.length > 0) {
-    opt.toolbars.forEach(a => {
-      toolbars.push(deps.jquery.extend(true, defOptions.toolbarOption, a))
-    })
-  }
-  if (opt.rightMenus && opt.rightMenus.length > 0) {
-    opt.rightMenus.forEach(a => {
-      rightMenus.push(deps.jquery.extend(true, defOptions.rightMenuOption, a))
-    })
-  }
-
-  function init_dom(_dom) {
-    // 初始化toolbars节点
-    toolbars_dom = document.createElement('div')
-    toolbars_dom.classList.add('fce-toolbars')
-    toolbars_dom.innerHTML = 'toolbar'
-    _dom.appendChild(toolbars_dom)
-      // 初始化cy节点
-    cy_dom = document.createElement('div')
-    cy_dom.classList.add('fce-cy')
-    _dom.appendChild(cy_dom)
-      // 初始化zoomBar节点
-    zoom_dom = document.createElement('div')
-    zoom_dom.classList.add('fce-zoombar')
-    zoom_dom.innerHTML = 'z'
-    _dom.appendChild(zoom_dom)
-      // 设置底部信息
-    footer_dom = document.createElement('div')
-    footer_dom.classList.add('fce-footer')
-    footer_dom.innerHTML = 'footer'
-    _dom.appendChild(footer_dom)
-  }
-  init_dom(dom)
-  opt.el.appendChild(dom)
-
-  function init_cy() {
+  //所有的结构化的element元素
+  const allElements = fceDom(opt.el),
     cy = new deps.cytoscape({
-      container: cy_dom,
+      container: allElements["cy"],
       boxSelectionEnabled: false,
       autounselectify: true,
       userZoomingEnabled: false,
@@ -66,28 +27,61 @@ let FCE = function(options) {
       zoom: 1,
       minZoom: 0.1,
       elements: {
-        nodes: [
-          { data: { id: 'n', label: 'Tap me' } }
-        ]
+        nodes: [{ data: { id: "n", label: "Tap me" } }]
       },
       layout: {
-        name: 'grid'
+        name: "grid"
       }
-    })
-  }
-  init_cy()
-  this.dom = dom
-  this.options = opt
-  this.toolbars = toolbars
-}
+    });
+
+  // if (opt.toolbars && opt.toolbars.length > 0) {
+  //   opt.toolbars.forEach(a => {
+  //     toolbars.push(deps.jquery.extend(true, defOptions.toolbarOption, a));
+  //   });
+  // }
+  // if (opt.rightMenus && opt.rightMenus.length > 0) {
+  //   opt.rightMenus.forEach(a => {
+  //     rightMenus.push(deps.jquery.extend(true, defOptions.rightMenuOption, a));
+  //   });
+  // }
+
+  this.allElements = allElements;
+  this.options = opt;
+  this.cy = cy;
+  //this.toolbars = toolbars;
+};
 FCE.prototype = {
   constructor: FCE,
   // 根据id找到bar
-  getToolbarById(id) {},
-  on(event, fun) {},
-  fire(event) {},
+  getToolbarById(id) {
+    //查找toolbar对象
+  },
+  /**
+   * 添加监听
+   * @param {String} types 方法类型
+   * @param {Function} listener 具体监听方法
+   */
+  addListener() {
+    return listener.addListener.apply(this, arguments);
+  },
+  /**
+   * 移除监听方法
+   * @param {String} type 方法类型
+   * @param {Function} listener 具体监听方法
+   */
+  removeListener() {
+    return listener.removeListener.apply(this, arguments);
+  },
+  /**
+   * 触发监听方法
+   * @param {String} types 类型
+   * @param {arguments} args 参数
+   */
+  fireEvent() {
+    return listener.fireEvent.apply(this, arguments);
+  },
   // 注销
   destroy() {}
-}
-window.FCE = FCE
-export default FCE
+};
+window.FCE = FCE;
+export default FCE;
