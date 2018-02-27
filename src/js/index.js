@@ -4,9 +4,43 @@ import deps from "./dependencies";
 import listener from "./core/listener";
 import nav from "./navbars/index";
 import fceDom from "./core/dom";
+import Zoom from "./core/zoom";
 require("../css/default.scss");
 
-let FCE = function(options) {
+/**
+ * 核心对象
+ * @param {*} options
+ */
+const zoomChange = function(value) {
+  this.cy.zoom(value);
+  const elements = this.cy.elements(),
+    firstEle = elements && elements.length ? elements[0] : null;
+  if (firstEle) {
+    this.cy.center(firstEle);
+  }
+};
+/**
+ * 初始化cy对象
+ * @param {Object} options 配置项
+ */
+const initCy = function(options) {
+  const cy = new deps.cytoscape(options);
+  cy.gridGuide({
+    snapToGridDuringDrag: true, //对齐功能
+    snapToAlignmentLocationOnRelease: true,
+    snapToAlignmentLocationDuringDrag: true,
+    centerToEdgeAlignment: true,
+    guidelinesTolerance: true,
+    guidelinesStyle: {
+      strokeStyle: "black",
+      horizontalDistColor: "#ff0000",
+      verticalDistColor: "green",
+      initPosAlignmentColor: "#0000ff"
+    }
+  });
+  return cy;
+};
+const FCE = function(options) {
   const opt = deps.jquery.extend(true, defOptions.defaultOptions, options);
   // rootElement = document.createElement("div");
   // rootElement.classList.add("fce");
@@ -16,38 +50,37 @@ let FCE = function(options) {
   } else if (opt.el && typeof opt.el === "string") {
     opt.el = document.querySelector("#" + opt.el);
   }
+  const self = this;
   //所有的结构化的element元素
   const allElements = fceDom(opt.el),
-    cy = new deps.cytoscape({
-      container: allElements["cy"],
-      boxSelectionEnabled: false,
-      autounselectify: true,
-      userZoomingEnabled: false,
-      maxZoom: 9,
-      zoom: 1,
-      minZoom: 0.1,
-      elements: {
-        nodes: [{ data: { id: "n", label: "Tap me" } }]
-      },
-      layout: {
-        name: "grid"
-      }
-    });
+    zoom = new Zoom();
+  zoom.addChange(function(item) {
+    zoomChange.call(self, this.getCyZoom(item));
+  });
+  allElements["zoom"].appendChild(zoom.dom);
+  //两个下划线表示不希望用户操作的对象
 
-  // if (opt.toolbars && opt.toolbars.length > 0) {
-  //   opt.toolbars.forEach(a => {
-  //     toolbars.push(deps.jquery.extend(true, defOptions.toolbarOption, a));
-  //   });
-  // }
-  // if (opt.rightMenus && opt.rightMenus.length > 0) {
-  //   opt.rightMenus.forEach(a => {
-  //     rightMenus.push(deps.jquery.extend(true, defOptions.rightMenuOption, a));
-  //   });
-  // }
-
-  this.allElements = allElements;
-  this.options = opt;
-  this.cy = cy;
+  this.__allElements__ = allElements;
+  this.__options__ = opt;
+  this.cy = initCy({
+    container: allElements["cy"],
+    boxSelectionEnabled: false,
+    autounselectify: true,
+    userZoomingEnabled: false,
+    maxZoom: 9,
+    zoom: 1,
+    minZoom: 0.1,
+    elements: {
+      nodes: [
+        { data: { id: "n1", label: "Tap me1" } },
+        { data: { id: "n2", label: "Tap me2" } }
+      ]
+    },
+    layout: {
+      name: "grid"
+    }
+  });
+  zoomChange.call(this, zoom.getCyZoom());
   //this.toolbars = toolbars;
 };
 FCE.prototype = {

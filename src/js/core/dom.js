@@ -23,13 +23,20 @@ export default function(el) {
   toolbar.innerHTML = "toolbar test!";
   root.appendChild(toolbar);
 
+  const searcher = createElement("div");
+  searcher.classList.add("fce-searcher");
+  const txtSearch = createElement("input");
+  txtSearch.setAttribute("placeholder", "搜索当前流程图");
+  txtSearch.setAttribute("type", "text");
+  searcher.appendChild(txtSearch);
+  root.appendChild(searcher);
+
   const cy = createElement("div");
   cy.classList.add("fce-cy");
   root.appendChild(cy);
 
   const zoom = createElement("div");
   zoom.classList.add("fce-zoombar");
-  zoom.innerHTML = "zoom test!";
   root.appendChild(zoom);
 
   const footer = document.createElement("div");
@@ -37,5 +44,5 @@ export default function(el) {
   footer.innerHTML = "footer";
   root.appendChild(footer);
   el.appendChild(root);
-  return { root, toolbar, cy, zoom, footer };
+  return { root, toolbar, searcher, cy, zoom, footer };
 }

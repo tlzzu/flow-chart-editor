@@ -2,15 +2,18 @@ $default-color: black;
 $cy-bg-color: blue;
 $border-color: #c8c8c8;
 $ft-bg-color: #f4f4f4;
+$zoombar-bg-color: white;
 $ft-line-height: 20px;
 $ft-font-size: 12px;
+$fce-zoom-default-height: 75px;
 $tbs-bg-color: #dfdfdf; //toolbar的背景色
 $tbs-line-height: 35px;
 $zoombar-height: 200px;
 $zoombar-width: 25px;
+$z-index: 5;
 //代码块
 @mixin absolute-position {
-  z-index: 1;
+  z-index: $z-index;
   position: absolute;
   border-top: 1px solid $border-color;
   border-bottom: 1px solid $border-color;
@@ -27,6 +30,7 @@ $zoombar-width: 25px;
   width: 100%;
   height: 100%;
   color: $default-color;
+  border-top: 1px solid $border-color;
   border-left: 1px solid $border-color;
   border-right: 1px solid $border-color;
   .fce-footer {
@@ -37,12 +41,47 @@ $zoombar-width: 25px;
     line-height: $ft-line-height;
     font-size: $ft-font-size;
   }
+  .fce-searcher {
+    @include absolute-position;
+    z-index: $z-index+1;
+    right: 0;
+    top: 0;
+    padding-right: 5px;
+    width: 150px;
+    font-size: 13px;
+    line-height: $tbs-line-height;
+    border: none;
+  }
+  .fce-searcher input {
+    -webkit-appearance: none;
+    background-color: #fff;
+    border-radius: 4px;
+    font-size: inherit;
+    border: 1px solid #d8dce5;
+    box-sizing: border-box;
+    color: #5a5e66;
+    text-align: start;
+    display: inline-block;
+    font: 400 13.3333px Arial;
+    height: 25px;
+    margin-right: 10px;
+    line-height: 1;
+    outline: 0;
+    padding: 0 10px;
+    transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    width: 100%;
+  }
+  .fce-searcher input:hover {
+    border-color: #b4bccc;
+  }
   .fce-toolbars {
     @include absolute-position;
     @include display-flex-1;
     top: 0;
     background-color: $tbs-bg-color;
     line-height: $tbs-line-height;
+    border-top: 0;
+    display: none;
   }
   .fce-zoombar {
     @include absolute-position;
@@ -54,6 +93,50 @@ $zoombar-width: 25px;
     border-right: 1px solid $border-color;
     border-radius: 4px;
     text-align: center;
+    background-color: $tbs-bg-color;
+  }
+  .fce-zoombar .fce-zoom-dom {
+    margin: 0 auto;
+  }
+  .fce-zoombar .fce-zoom-dom-background {
+    background-color: $zoombar-bg-color;
+    margin: 0 auto;
+    width: 2px;
+    height: 100%;
+  }
+  .fce-zoombar .fce-zoom-dom-default {
+    background-color: $zoombar-bg-color;
+    text-align: center;
+    height: 2px;
+    position: absolute;
+  }
+  .fce-zoombar .fce-zoom-dom-active {
+    border-radius: 10px;
+    height: 10px;
+    background-color: $zoombar-bg-color;
+    position: absolute;
+    // top: $fce-zoom-default-height;
+  }
+  @mixin fce-zoom-dom-bar-default {
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+  }
+  .fce-zoom-dom-default {
+    cursor: pointer;
+  }
+  .fce-zoom-dom-reduce {
+    @include fce-zoom-dom-bar-default;
+    margin-top: 3px;
+  }
+  .fce-zoom-dom-plus {
+    @include fce-zoom-dom-bar-default;
+    margin-bottom: 8px;
+  }
+  .fce-zoom-dom-reduce img,
+  .fce-zoom-dom-plus img {
+    @include fce-zoom-dom-bar-default;
+    display: inline-block;
   }
   .fce-cy {
     // position: fixed;
