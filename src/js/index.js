@@ -100,7 +100,6 @@ const FCE = function(options) {
     navbars = new Navbars();
   navbars.addListener("change", function() {
     //todo
-    debugger;
   });
   zoom.addChange(function(item) {
     zoomChange.call(self, this.getCyZoom(item));

@@ -156,8 +156,11 @@ $z-index: 1000;
           vertical-align: middle;
         }
       }
-      .fce-nav-bar-active,
       .fce-nav-bar:hover {
+        background-color: #add7f6;
+      }
+      .fce-nav-bar-active,
+      .fce-nav-bar-active:hover {
         background-color: $bar-bg-active;
       }
     }

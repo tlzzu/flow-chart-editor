@@ -27,6 +27,7 @@ BaseBar.prototype = {
     this.options.click.call(this, item);
   },
   addClass(classNames) {
+    if (!classNames) return;
     const arr = utils.trim(classNames).split(/\s+/);
     for (let i = 0, l = arr.length; i < l; i++) {
       const className = arr[i];

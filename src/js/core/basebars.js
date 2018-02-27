@@ -12,8 +12,16 @@ const init = function() {
     "click",
     function(evt) {
       //todo 往上找，找到 fce-base-bar 的name，作为对比
-      debugger;
-      self.fireEvent("change", self.bars["pointer"]);
+      const current = utils.findParentElement(evt.target, "fce-base-bar");
+      if (current) {
+        const name = current.getAttribute ?
+          current.getAttribute("name") :
+          undefined;
+        if (name) {
+          self.setActiveBar(name);
+          self.fireEvent("change", self.bars[name]);
+        }
+      }
     }.bind(self)
   );
   this.dom = dom;
@@ -53,9 +61,9 @@ Basebars.prototype.setActiveBar = function(name) {
   if (!this.bars[name]) return;
   for (let b in this.bars) {
     const bar = this.bars[b];
-    bar.removeClass(this.activeClass);
+    bar.removeClass(this.options.activeClass);
   }
-  this.bars[name].addClass(this.activeClass);
+  this.bars[name].addClass(this.options.activeClass);
 };
 //基础
 export default Basebars;

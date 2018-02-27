@@ -4,7 +4,48 @@ export default {
    * @param {String} str 需要去除空格的字符串
    */
   trim(str) {
-    return str.replace(/(^[ \t\n\r]+)|([ \t\n\r]+$)/g, "");
+    return str ? str.replace(/(^[ \t\n\r]+)|([ \t\n\r]+$)/g, "") : "";
+  },
+  /**
+   * 循环方法
+   * @param {Array} arr 数组
+   * @param {Function} handler  如果返回true，则中断不予返回
+   */
+  forEach(arr, handler) {
+    if (!arr || !arr.length) return;
+    for (let i = 0, l = arr.length; i < l; i++) {
+      const item = arr[i];
+      if (handler) {
+        if (handler(item)) {
+          return;
+        }
+      }
+    }
+  },
+  /**
+   * 想让找到符合要求的element元素
+   * @param {Element} ele 元素
+   * @param {String} classNames  样式
+   */
+  findParentElement(ele, classNames) {
+    if (!ele) return null;
+    classNames =
+      typeof classNames === "string" ?
+      this.trim(classNames).split(/\s+/) :
+      classNames;
+    let bo = false;
+    this.forEach(classNames, item => {
+      if (!bo && ele && ele.classList && ele.classList.contains(item)) {
+        bo = true;
+      }
+      return bo;
+    });
+    if (bo) {
+      return ele;
+    }
+    if (ele && ele.parentElement && ele.parentElement.nodeName !== "BODY") {
+      return this.findParentElement(ele.parentElement, classNames);
+    }
   },
   /**
    * 注册事件
