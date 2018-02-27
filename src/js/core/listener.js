@@ -42,9 +42,9 @@ const removeListener = function(type, listener) {
  * @returns {Array} 返回一个数组
  */
 const getListener = function(type) {
-  const listeners = this.allListeners;
+  const listeners = this.__allListeners__;
   type = type.toLowerCase();
-  return listeners ? listeners[type] : [];
+  return listeners[type] ? listeners[type] : [];
 };
 /**
  * 触发事件
@@ -52,7 +52,7 @@ const getListener = function(type) {
 const fireEvent = function() {
   const types = arguments[0];
   if (!types) return;
-  const typeArray = utils.trim(types),
+  const typeArray = utils.trim(types).split(/\s+/),
     self = this;
   for (let i = 0, l = typeArray.length; i < l; i++) {
     const type = typeArray[i],

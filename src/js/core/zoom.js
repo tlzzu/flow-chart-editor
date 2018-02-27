@@ -185,6 +185,19 @@ Zoom.prototype = {
    */
   addChange: function(handler) {
     this.__changeListeners__.push(handler);
+  },
+  /**
+   * 移除监听
+   */
+  removeChange: function(handler) {
+    const listeners = this.__changeListeners__;
+    for (let i = 0, l = listeners.length; i < l; i++) {
+      const listener = listeners[i];
+      if (listener === handler) {
+        listeners.splice(i, 1);
+        i--;
+      }
+    }
   }
 };
 export default Zoom;

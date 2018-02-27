@@ -36,7 +36,7 @@ export default function(el) {
   root.appendChild(cy);
 
   const zoom = createElement("div");
-  zoom.classList.add("fce-zoombar");
+  zoom.classList.add("fce-navbar");
   root.appendChild(zoom);
 
   const footer = document.createElement("div");

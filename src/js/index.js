@@ -2,9 +2,9 @@
 import defOptions from "./defaultOptions";
 import deps from "./dependencies";
 import listener from "./core/listener";
-import nav from "./navbars/index";
 import fceDom from "./core/dom";
 import Zoom from "./core/zoom";
+import Navbars from "./core/navbars";
 require("../css/default.scss");
 
 /**
@@ -25,6 +25,7 @@ const zoomChange = function(value) {
  */
 const initCy = function(options) {
   const cy = new deps.cytoscape(options);
+  //网格功能
   cy.gridGuide({
     snapToGridDuringDrag: true, //对齐功能
     snapToAlignmentLocationOnRelease: true,
@@ -38,12 +39,54 @@ const initCy = function(options) {
       initPosAlignmentColor: "#0000ff"
     }
   });
+  //初始化撤销、重做
+  cy.undoRedo({
+    isDebug: false,
+    actions: {},
+    undoableDrag: true,
+    stackSizeLimit: undefined,
+    ready: function() {}
+  });
+  //todo 右键 contextMenus
+
+  //连线
+  cy.edgehandles({
+    preview: true,
+    hoverDelay: 150,
+    handleNodes: "node", //连线节点必须满足样式
+    handlePosition: "middle",
+    handleInDrawMode: false,
+    edgeType: function(sourceNode, targetNode) {
+      return "flat";
+    },
+    loopAllowed: function(node) {
+      return false;
+    },
+    nodeLoopOffset: -50,
+    nodeParams: function(sourceNode, targetNode) {
+      return {};
+    },
+    edgeParams: function(sourceNode, targetNode, i) {},
+    disable: function() {},
+    complete: function(sourceNode, targetNode, addedEles) {}
+  });
+  //连线折叠
+  cy.edgeBendEditing({
+    bendPositionsFunction: function(ele) {
+      return ele.data("bendPointPositions");
+    },
+    initBendPointsAutomatically: true,
+    undoable: true,
+    bendShapeSizeFactor: 6,
+    enabled: true,
+    addBendMenuItemTitle: "添加弯曲点",
+    removeBendMenuItemTitle: "移除弯曲点"
+  });
+
   return cy;
 };
 const FCE = function(options) {
   const opt = deps.jquery.extend(true, defOptions.defaultOptions, options);
-  // rootElement = document.createElement("div");
-  // rootElement.classList.add("fce");
   if (!opt || !opt.el) {
     console.log("页面中不存在用于承载fce对象的dom元素");
     return;
@@ -53,11 +96,17 @@ const FCE = function(options) {
   const self = this;
   //所有的结构化的element元素
   const allElements = fceDom(opt.el),
-    zoom = new Zoom();
+    zoom = new Zoom(),
+    navbars = new Navbars();
+  navbars.addListener("change", function() {
+    //todo
+    debugger;
+  });
   zoom.addChange(function(item) {
     zoomChange.call(self, this.getCyZoom(item));
   });
   allElements["zoom"].appendChild(zoom.dom);
+  allElements["zoom"].appendChild(navbars.dom);
   //两个下划线表示不希望用户操作的对象
 
   this.__allElements__ = allElements;
@@ -73,15 +122,16 @@ const FCE = function(options) {
     elements: {
       nodes: [
         { data: { id: "n1", label: "Tap me1" } },
-        { data: { id: "n2", label: "Tap me2" } }
-      ]
+        { data: { id: "n2", label: "Tap me2" } },
+        { data: { id: "n3", label: "Tap me3" } }
+      ],
+      edges: [{ data: { source: "n1", target: "n2", id: "e1" } }]
     },
     layout: {
       name: "grid"
     }
   });
   zoomChange.call(this, zoom.getCyZoom());
-  //this.toolbars = toolbars;
 };
 FCE.prototype = {
   constructor: FCE,
