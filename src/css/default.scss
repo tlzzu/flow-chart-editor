@@ -1,0 +1,206 @@
+$default-color: black;
+$cy-bg-color: blue;
+$bar-bg-active: #5fb8fb;
+$border-color: #c8c8c8;
+$ft-bg-color: #f4f4f4;
+$zoombar-bg-color: white;
+$ft-line-height: 20px;
+$ft-font-size: 12px;
+$fce-zoom-default-height: 75px;
+$tbs-bg-color: #dfdfdf; //toolbar的背景色
+$tbs-line-height: 35px;
+$zoombar-height: 200px;
+$zoombar-width: 25px;
+$z-index: 1000;
+//代码块
+@mixin absolute-position {
+  z-index: $z-index;
+  position: absolute;
+  border-top: 1px solid $border-color;
+  border-bottom: 1px solid $border-color;
+}
+
+@mixin display-flex-1 {
+  display: flex;
+  flex: 1;
+  width: 100%;
+}
+
+@mixin bar-cursor {
+  cursor: pointer;
+}
+
+@mixin bar-hover {
+  background-color: #add7f6;
+}
+
+.fce {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  color: $default-color;
+  border-top: 1px solid $border-color;
+  border-left: 1px solid $border-color;
+  border-right: 1px solid $border-color;
+  * {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+  .fce-footer {
+    @include absolute-position;
+    @include display-flex-1;
+    bottom: 0;
+    background-color: $ft-bg-color;
+    line-height: $ft-line-height;
+    font-size: $ft-font-size;
+  }
+  .fce-searcher {
+    @include absolute-position;
+    z-index: $z-index+1;
+    right: 0;
+    top: 0;
+    padding-right: 5px;
+    width: 150px;
+    font-size: 13px;
+    line-height: $tbs-line-height;
+    border: none;
+    input {
+      -webkit-appearance: none;
+      background-color: #fff;
+      border-radius: 4px;
+      font-size: inherit;
+      border: 1px solid #d8dce5;
+      box-sizing: border-box;
+      color: #5a5e66;
+      text-align: start;
+      display: inline-block;
+      font: 400 13.3333px Arial;
+      height: 25px;
+      margin-right: 10px;
+      line-height: 1;
+      outline: 0;
+      padding: 0 10px;
+      transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+      width: 100%;
+    }
+    input:hover {
+      border-color: #b4bccc;
+    }
+  }
+  .fce-toolbars {
+    @include absolute-position;
+    @include display-flex-1;
+    top: 0;
+    background-color: $tbs-bg-color;
+    line-height: $tbs-line-height;
+    border-top: 0;
+    .fce-tool-bars {
+      .fce-tool-bar {
+        float: left;
+        line-height: 35px;
+        padding: 0 10px;
+        img {
+          width: 20px;
+          height: 20px;
+          vertical-align: middle;
+        }
+      }
+      .fce-tool-bar:hover {
+        @include bar-hover;
+      }
+      .fce-tool-bar-active,
+      .fce-tool-bar-active:hover {
+        background-color: $bar-bg-active;
+      }
+    }
+  }
+  .fce-base-bars {
+    .fce-base-bar {
+      @include bar-cursor;
+    }
+  }
+  .fce-navbar {
+    @include absolute-position;
+    bottom: 30px;
+    left: 10px;
+    height: $zoombar-height;
+    width: $zoombar-width;
+    border-left: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+    border-radius: 4px;
+    text-align: center;
+    background-color: $tbs-bg-color;
+    .fce-zoom-dom {
+      margin: 0 auto;
+      .fce-zoom-dom-background {
+        background-color: $zoombar-bg-color;
+        margin: 0 auto;
+        width: 2px;
+        height: 100%;
+      }
+      .fce-zoom-dom-default {
+        background-color: $zoombar-bg-color;
+        text-align: center;
+        height: 2px;
+        position: absolute;
+      }
+      .fce-zoom-dom-active {
+        border-radius: 10px;
+        height: 10px;
+        background-color: $zoombar-bg-color;
+        position: absolute;
+        // top: $fce-zoom-default-height;
+      }
+      @mixin fce-zoom-dom-bar-default {
+        width: 12px;
+        height: 12px;
+        @include bar-cursor;
+      }
+      .fce-zoom-dom-default {
+        @include bar-cursor;
+      }
+      .fce-zoom-dom-reduce {
+        @include fce-zoom-dom-bar-default;
+        margin-top: 3px;
+      }
+      .fce-zoom-dom-plus {
+        @include fce-zoom-dom-bar-default;
+        margin-bottom: 8px;
+      }
+      .fce-zoom-dom-reduce img,
+      .fce-zoom-dom-plus img {
+        @include fce-zoom-dom-bar-default;
+        display: inline-block;
+      }
+    }
+    .fce-nav-bars {
+      position: absolute;
+      bottom: 0;
+      margin: 0px auto;
+      width: 25px;
+      .fce-nav-bar {
+        width: 100%;
+        line-height: 25px;
+        img {
+          width: 15px;
+          height: 15px;
+          vertical-align: middle;
+        }
+      }
+      .fce-nav-bar:hover {
+        @include bar-hover;
+      }
+      .fce-nav-bar-active,
+      .fce-nav-bar-active:hover {
+        background-color: $bar-bg-active;
+      }
+    }
+  }
+  .fce-cy {
+    // position: fixed;
+    // background: $cy-bg-color;
+    width: 100%;
+    height: 100%;
+  }
+}
