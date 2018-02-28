@@ -1,5 +1,5 @@
 import utils from "../utils/index";
-const init = function() {
+const render = function() {
   const dom = document.createElement("div");
   dom.setAttribute("name", this.name);
   dom.className = this.options.className;
@@ -15,17 +15,25 @@ const init = function() {
  * 单个的bar
  * {name:'不能重复',icon:'',className:'',title:'',click(){}}
  */
-const BaseBar = function(options) {
-  this.options = options;
-  this.name = options.name;
+const Basebar = function() {
+  if (!this.options) {
+    return;
+  }
+  this.name = this.options.name;
   this.dom = null;
-  init.call(this);
+  if (this.options.render) {
+    this.options.render.call(this);
+  } else if (this.render) {
+    this.render();
+  } else {
+    render.call(this);
+  }
 };
-BaseBar.prototype = {
-  click(item) {
-    //这里要改变this指向
-    this.options.click.call(this, item);
-  },
+Basebar.prototype = {
+  //   click(item) {
+  //     //这里要改变this指向
+  //     this.options.click.call(this, item);
+  //   },
   addClass(classNames) {
     if (!classNames) return;
     const arr = utils.trim(classNames).split(/\s+/);
@@ -47,4 +55,4 @@ BaseBar.prototype = {
   }
 };
 
-export default BaseBar;
+export default Basebar;

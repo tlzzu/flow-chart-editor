@@ -7,23 +7,7 @@ const init = function() {
     self = this;
   dom.className = this.options.className;
   dom.classList.add("fce-base-bars");
-  utils.registerEvent(
-    dom,
-    "click",
-    function(evt) {
-      //todo 往上找，找到 fce-base-bar 的name，作为对比
-      const current = utils.findParentElement(evt.target, "fce-base-bar");
-      if (current) {
-        const name = current.getAttribute ?
-          current.getAttribute("name") :
-          undefined;
-        if (name) {
-          self.setActiveBar(name);
-          self.fireEvent("change", self.bars[name]);
-        }
-      }
-    }.bind(self)
-  );
+
   this.dom = dom;
   initBars.call(self);
 };
@@ -35,17 +19,20 @@ const initBars = function() {
     self = this;
   for (let i = 0, l = barOpts.length; i < l; i++) {
     const barOpt = barOpts[i],
-      bar = new BaseBar(barOpt);
+      bar = new this.BarType(barOpt);
     self.dom.appendChild(bar.dom);
     self.bars[bar.name] = bar;
   }
 };
-const Basebars = function(options) {
+/**
+ * bar的基类，不可直接被new
+ */
+const Basebars = function() {
   //{bars:[{name:'不能重复',icon:'',className:'',title:'',isActive:true,change(){}}],activeClass:'',activeName:'',className:''}
   if (!this.options) {
-    if (!options) return;
-    this.options = options;
+    return;
   }
+  this.BarType = this.BarType ? this.BarType : BaseBar;
   this.bars = {}; //basebars类型 所有的初始化的bar
   this.activeBar = null; //basebars类型 当前激活的bar
   this.__allListeners__ = this.__allListeners__ || {}; //所有的change事件：change事件
@@ -64,6 +51,7 @@ Basebars.prototype.setActiveBar = function(name) {
     bar.removeClass(this.options.activeClass);
   }
   this.bars[name].addClass(this.options.activeClass);
+  this.activeBar = this.bars[name];
 };
 //基础
 export default Basebars;

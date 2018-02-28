@@ -21,7 +21,7 @@ edgeBendEditing(cytoscape, jquery);
 undoRedo(cytoscape);
 viewUtilities(cytoscape, jquery);
 cytoscape.use(edgehandles);
-export default {
+export {
   cytoscape,
   cytoscape_grid,
   edgehandles,

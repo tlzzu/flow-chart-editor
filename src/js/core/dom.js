@@ -20,7 +20,7 @@ export default function(el) {
 
   const toolbar = createElement("div");
   toolbar.classList.add("fce-toolbars");
-  toolbar.innerHTML = "toolbar test!";
+
   root.appendChild(toolbar);
 
   const searcher = createElement("div");

@@ -1,7 +1,25 @@
-var fce
+var fce;
 window.onload = function() {
-  fce = new FCE({ el: document.getElementById('fce') })
-}
+  fce = new FCE({
+    el: document.getElementById("fce"),
+    toolbars: [{
+        name: "save",
+        icon: "images/pointer.png",
+        className: "fce-tool-bar",
+        title: "指针",
+        click() {}
+      },
+      {
+        name: "import",
+        icon: "images/line-solid.png",
+        className: "fce-tool-bar",
+        title: "连线",
+        click() {}
+      },
+      "animation"
+    ]
+  });
+};
 
 // var fce
 // window.onload = function() {

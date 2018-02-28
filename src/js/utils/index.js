@@ -16,7 +16,7 @@ export default {
     for (let i = 0, l = arr.length; i < l; i++) {
       const item = arr[i];
       if (handler) {
-        if (handler(item)) {
+        if (handler(item, i)) {
           return;
         }
       }

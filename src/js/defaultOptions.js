@@ -37,11 +37,7 @@ const defaultOptions = {
   renderFooter: function() {
     // footer内容，可以自定义
   },
-  rightMenu: null, // 右键配置 默认没有
-  toolbars: null // toolbar配置 默认没有
+  rightMenus: [], // 右键配置 默认没有
+  toolbars: [] // toolbar配置 默认没有
 };
-export default {
-  defaultOptions,
-  rightMenuOption,
-  toolbarOption
-};
+export { defaultOptions, rightMenuOption, toolbarOption };

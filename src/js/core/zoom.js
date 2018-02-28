@@ -78,7 +78,7 @@ const _createZoomElement = function() {
   plus.classList.add("fce-zoom-dom-plus");
   plus.setAttribute("title", "放大");
   const plusImg = document.createElement("img");
-  plusImg.src = require("../../img/icon/fce-zoom-dom-plus.png");
+  plusImg.src = require("../../images/icon/fce-zoom-dom-plus.png");
   utils.registerEvent(plus, "click", function() {
     self.times(1);
   });
@@ -107,7 +107,7 @@ const _createZoomElement = function() {
   reduce.classList.add("fce-zoom-dom-reduce");
   reduce.setAttribute("title", "缩小");
   const reduceImg = document.createElement("img");
-  reduceImg.src = require("../../img/icon/fce-zoom-dom-reduce.png");
+  reduceImg.src = require("../../images/icon/fce-zoom-dom-reduce.png");
   reduce.appendChild(reduceImg);
   utils.registerEvent(reduce, "click", function() {
     self.times(-1);

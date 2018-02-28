@@ -1,14 +1,16 @@
 "use strict";
-import defOptions from "./defaultOptions";
-import deps from "./dependencies";
+import { defaultOptions } from "./defaultOptions";
+import { jquery } from "./dependencies";
 import listener from "./core/listener";
 import fceDom from "./core/dom";
 import Zoom from "./core/zoom";
-import Navbars from "./core/navbars";
+import Navbars from "./core/Navbars";
+import Toolbars from "./core/Toolbars";
+import { initCy } from "./cytoscapeHelper";
 require("../css/default.scss");
 
 /**
- * 核心对象
+ * 缩放组件
  * @param {*} options
  */
 const zoomChange = function(value) {
@@ -19,74 +21,38 @@ const zoomChange = function(value) {
     this.cy.center(firstEle);
   }
 };
-/**
- * 初始化cy对象
- * @param {Object} options 配置项
- */
-const initCy = function(options) {
-  const cy = new deps.cytoscape(options);
-  //网格功能
-  cy.gridGuide({
-    snapToGridDuringDrag: true, //对齐功能
-    snapToAlignmentLocationOnRelease: true,
-    snapToAlignmentLocationDuringDrag: true,
-    centerToEdgeAlignment: true,
-    guidelinesTolerance: true,
-    guidelinesStyle: {
-      strokeStyle: "black",
-      horizontalDistColor: "#ff0000",
-      verticalDistColor: "green",
-      initPosAlignmentColor: "#0000ff"
+const initNavbarsListener = function(navbars) {
+  const self = this;
+  navbars.addListener("change", function() {
+    // 这里出发navbar变更事件
+    const bar = arguments.length > 1 ? arguments[1] : null;
+    if (!bar) return;
+    if (bar.name === "pointer") {
+      self.__allElements__["cy"].style.cursor = "default";
+      const handleNodes = self.cy.$(
+        ".eh-handle,.eh-hover,.eh-source,.eh-target,.eh-preview,.eh-ghost-edge"
+      );
+      if (handleNodes && handleNodes.length > 0) {
+        self.cy.remove(handleNodes);
+      }
+      self.cyExtensions["edgehandles"].disable();
+    } else if (bar.name === "line") {
+      self.__allElements__["cy"].style.cursor = "crosshair";
+      self.cyExtensions["edgehandles"].enable();
+    } else {
+      console.error("未知nav-bar!");
+      console.error(bar);
     }
   });
-  //初始化撤销、重做
-  cy.undoRedo({
-    isDebug: false,
-    actions: {},
-    undoableDrag: true,
-    stackSizeLimit: undefined,
-    ready: function() {}
-  });
-  //todo 右键 contextMenus
-
-  //连线
-  cy.edgehandles({
-    preview: true,
-    hoverDelay: 150,
-    handleNodes: "node", //连线节点必须满足样式
-    handlePosition: "middle",
-    handleInDrawMode: false,
-    edgeType: function(sourceNode, targetNode) {
-      return "flat";
-    },
-    loopAllowed: function(node) {
-      return false;
-    },
-    nodeLoopOffset: -50,
-    nodeParams: function(sourceNode, targetNode) {
-      return {};
-    },
-    edgeParams: function(sourceNode, targetNode, i) {},
-    disable: function() {},
-    complete: function(sourceNode, targetNode, addedEles) {}
-  });
-  //连线折叠
-  cy.edgeBendEditing({
-    bendPositionsFunction: function(ele) {
-      return ele.data("bendPointPositions");
-    },
-    initBendPointsAutomatically: true,
-    undoable: true,
-    bendShapeSizeFactor: 6,
-    enabled: true,
-    addBendMenuItemTitle: "添加弯曲点",
-    removeBendMenuItemTitle: "移除弯曲点"
-  });
-
-  return cy;
 };
+const initZoomListener = function(zoom) {
+  const self = this;
+  zoom.addChange(function(item) {
+    zoomChange.call(self, this.getCyZoom(item));
+  });
+}; 
 const FCE = function(options) {
-  const opt = deps.jquery.extend(true, defOptions.defaultOptions, options);
+  const opt = jquery.extend(true, defaultOptions, options);
   if (!opt || !opt.el) {
     console.log("页面中不存在用于承载fce对象的dom元素");
     return;
@@ -97,39 +63,22 @@ const FCE = function(options) {
   //所有的结构化的element元素
   const allElements = fceDom(opt.el),
     zoom = new Zoom(),
-    navbars = new Navbars();
-  navbars.addListener("change", function() {
-    //todo
-  });
-  zoom.addChange(function(item) {
-    zoomChange.call(self, this.getCyZoom(item));
-  });
+    navbars = new Navbars(),
+    toolbars = new Toolbars(opt.toolbars);
+
+  allElements["toolbar"].appendChild(toolbars.dom);
   allElements["zoom"].appendChild(zoom.dom);
   allElements["zoom"].appendChild(navbars.dom);
+
   //两个下划线表示不希望用户操作的对象
 
   this.__allElements__ = allElements;
   this.__options__ = opt;
-  this.cy = initCy({
-    container: allElements["cy"],
-    boxSelectionEnabled: false,
-    autounselectify: true,
-    userZoomingEnabled: false,
-    maxZoom: 9,
-    zoom: 1,
-    minZoom: 0.1,
-    elements: {
-      nodes: [
-        { data: { id: "n1", label: "Tap me1" } },
-        { data: { id: "n2", label: "Tap me2" } },
-        { data: { id: "n3", label: "Tap me3" } }
-      ],
-      edges: [{ data: { source: "n1", target: "n2", id: "e1" } }]
-    },
-    layout: {
-      name: "grid"
-    }
+  initCy.call(self, {
+    container: allElements["cy"]
   });
+  initNavbarsListener.call(self, navbars);
+  initZoomListener.call(self, zoom);
   zoomChange.call(this, zoom.getCyZoom());
 };
 FCE.prototype = {

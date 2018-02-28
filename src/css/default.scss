@@ -26,6 +26,14 @@ $z-index: 1000;
   width: 100%;
 }
 
+@mixin bar-cursor {
+  cursor: pointer;
+}
+
+@mixin bar-hover {
+  background-color: #add7f6;
+}
+
 .fce {
   position: relative;
   width: 100%;
@@ -87,6 +95,30 @@ $z-index: 1000;
     background-color: $tbs-bg-color;
     line-height: $tbs-line-height;
     border-top: 0;
+    .fce-tool-bars {
+      .fce-tool-bar {
+        float: left;
+        line-height: 35px;
+        padding: 0 10px;
+        img {
+          width: 20px;
+          height: 20px;
+          vertical-align: middle;
+        }
+      }
+      .fce-tool-bar:hover {
+        @include bar-hover;
+      }
+      .fce-tool-bar-active,
+      .fce-tool-bar-active:hover {
+        background-color: $bar-bg-active;
+      }
+    }
+  }
+  .fce-base-bars {
+    .fce-base-bar {
+      @include bar-cursor;
+    }
   }
   .fce-navbar {
     @include absolute-position;
@@ -123,10 +155,10 @@ $z-index: 1000;
       @mixin fce-zoom-dom-bar-default {
         width: 12px;
         height: 12px;
-        cursor: pointer;
+        @include bar-cursor;
       }
       .fce-zoom-dom-default {
-        cursor: pointer;
+        @include bar-cursor;
       }
       .fce-zoom-dom-reduce {
         @include fce-zoom-dom-bar-default;
@@ -157,7 +189,7 @@ $z-index: 1000;
         }
       }
       .fce-nav-bar:hover {
-        background-color: #add7f6;
+        @include bar-hover;
       }
       .fce-nav-bar-active,
       .fce-nav-bar-active:hover {
