@@ -1,5 +1,5 @@
 //保证同时只能有一个触发事件
-import listener from "./listener";
+import listener from "./Listener";
 import utils from "../utils/index";
 import BaseBar from "./basebar";
 const init = function() {

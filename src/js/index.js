@@ -1,9 +1,9 @@
 "use strict";
 import { defaultOptions } from "./defaultOptions";
 import { jquery } from "./dependencies";
-import listener from "./core/listener";
-import fceDom from "./core/dom";
-import Zoom from "./core/zoom";
+import listener from "./core/Listener";
+import fceDom from "./core/Dom";
+import Zoom from "./core/Zoom";
 import Navbars from "./core/Navbars";
 import Toolbars from "./core/Toolbars";
 import { initCy } from "./cytoscapeHelper";
