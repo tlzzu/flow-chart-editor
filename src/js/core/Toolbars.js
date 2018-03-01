@@ -4,14 +4,14 @@ import utils from "../utils/index";
 import ToolbarItems from "./Toolbar/index";
 import { jquery } from "../dependencies";
 
-
 const defaultOptions = {
-  activeClass: "fce-tool-bar-active",
-  activeName: "",
-  className: "fce-tool-bars",
-  change() { },
-  bars: null
-},barClassName='fce-tool-bar';
+    activeClass: "fce-tool-bar-active",
+    activeName: "",
+    className: "fce-tool-bars",
+    change() {},
+    bars: null
+  },
+  barClassName = "fce-tool-bar";
 const initListener = function() {
   const self = this;
   utils.registerEvent(
@@ -24,10 +24,10 @@ const initListener = function() {
         const name = current.getAttribute ?
           current.getAttribute("name") :
           undefined;
-        if (this.activeBar&&this.activeBar.name===name) { 
+        if (this.activeBar && this.activeBar.name === name) {
           this.cancelActiveBar(name);
           //todo  取消选中
-        }else if (name) {
+        } else if (name) {
           this.setActiveBar(name);
           this.fireEvent("change", this.bars[name]);
         }
@@ -35,10 +35,10 @@ const initListener = function() {
     }.bind(self)
   );
 };
-const Toolbars = function (options) {
+const Toolbars = function(options) {
   //todo 处理toolbar事件
   if (!options) return;
-  options = jquery.extend(true, defaultOptions, {bars:options});
+  options = jquery.extend(true, defaultOptions, { bars: options });
   if (!options.bars) {
     options.bars = [];
   }
@@ -48,12 +48,12 @@ const Toolbars = function (options) {
       if (bar) {
         options.bars.splice(index, 1, bar);
       }
-    } else { 
+    } else {
       //对于自定义的bar，要给与其 className =barClassName
       const arr = utils.trim(item.className).split(/\s+/);
-      if (!arr.includes(barClassName)) { 
+      if (!arr.includes(barClassName)) {
         arr.splice(0, 0, barClassName);
-        item.className = item.join(' ');
+        item.className = item.join(" ");
       }
     }
   });

@@ -57,9 +57,12 @@ const Navbars = function(options) {
   };
   Basebars.call(this);
   initListener.call(this);
-  if (this.options.activeName) {
-    this.setActiveBar(this.options.activeName);
-  }
+  // this.render = function() {
+  //   if (this.options.activeName) {
+  //     this.setActiveBar(this.options.activeName);
+  //   }
+  //   debugger;
+  // };
 };
 Navbars.prototype = new Basebars();
 Navbars.prototype.constructor = Navbars;

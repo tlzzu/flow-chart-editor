@@ -1,4 +1,5 @@
 import { cytoscape, jquery } from "./dependencies";
+import listener from './cytoscapeListener';
 const cyOption = {
   //container: allElements["cy"],
   // boxSelectionEnabled: false,
@@ -146,6 +147,7 @@ const initCy = function(options) {
   //默认取消连线扩展
   edgehandles.disable();
   self.cy = cy;
+  
   self.cyExtensions = {
     gridGuide,
     undoRedo,
@@ -153,7 +155,7 @@ const initCy = function(options) {
     edgeBendEditing,
     viewUtilities,
     contextMenus
-  };
+  }; listener.call(self);
 };
 
 export { initCy };

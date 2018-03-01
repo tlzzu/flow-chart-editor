@@ -11,11 +11,19 @@ export default {
    * @param {String} str 数组
    * @param {String} splitStr  分隔符
    */
-  classNamesToArray(str,splitStr=/\s+/) { 
+  classNamesToArray(str, splitStr = /\s+/) {
     return this.trim(str).split(splitStr);
   },
   /**
-   * 循环方法  
+   * 阻止事件默认行为（包括事件冒泡）
+   * @param {Event} evt 事件对象
+   */
+  preventDefault(evt) {
+    evt.preventDefault ? evt.preventDefault() : (evt.returnValue = false);
+    evt.stopPropagation();
+  },
+  /**
+   * 循环方法
    * @param {Array} arr 数组
    * @param {Function} handler  如果返回true，则中断不予返回
    */

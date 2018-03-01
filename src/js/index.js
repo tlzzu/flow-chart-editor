@@ -65,21 +65,29 @@ const FCE = function(options) {
     zoom = new Zoom(),
     navbars = new Navbars(),
     toolbars = new Toolbars(opt.toolbars);
-
+ 
   allElements["toolbar"].appendChild(toolbars.dom);
+  toolbars.render();
   allElements["zoom"].appendChild(zoom.dom);
   allElements["zoom"].appendChild(navbars.dom);
-
+  navbars.render();
+  if (navbars.options.activeName) {
+    navbars.setActiveBar(navbars.options.activeName);
+  }
   //两个下划线表示不希望用户操作的对象
-
   this.__allElements__ = allElements;
   this.__options__ = opt;
+  this.__allListeners__ = {
+    click:[]
+  };
   initCy.call(self, {
     container: allElements["cy"]
   });
   initNavbarsListener.call(self, navbars);
   initZoomListener.call(self, zoom);
   zoomChange.call(this, zoom.getCyZoom());
+  self.zoom = zoom;
+  self.toolbars = toolbars;
 };
 FCE.prototype = {
   constructor: FCE,

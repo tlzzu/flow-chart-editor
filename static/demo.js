@@ -3,21 +3,47 @@ window.onload = function() {
   fce = new FCE({
     el: document.getElementById("fce"),
     toolbars: [{
-        name: "save",
-        icon: "images/pointer.png",
+        name: "rectangle",
+        icon: "images/rectangle.png",
         className: "fce-tool-bar",
-        title: "指针",
-        click() {}
+        title: "矩形",
+        exec() {
+          debugger;
+        }
       },
       {
-        name: "import",
-        icon: "images/line-solid.png",
+        name: "rounded_rectangle",
+        icon: "images/rounded_rectangle.png",
         className: "fce-tool-bar",
-        title: "连线",
-        click() {}
+        title: "圆角矩形",
+        exec() {
+          debugger;
+        }
+      },
+      {
+        name: "choice",
+        icon: "images/choice.png",
+        className: "fce-tool-bar",
+        title: "菱形",
+        exec() {
+          debugger;
+        }
+      },
+
+      {
+        name: "round",
+        icon: "images/round.png",
+        className: "fce-tool-bar",
+        title: "圆形",
+        exec() {
+          debugger;
+        }
       },
       "animation"
     ]
+  });
+  fce.addListener("click", function() {
+    debugger;
   });
 };
 

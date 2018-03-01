@@ -2,6 +2,7 @@ $default-color: black;
 $cy-bg-color: blue;
 $bar-bg-active: #5fb8fb;
 $border-color: #c8c8c8;
+$border-color-detail: 1px solid $border-color;
 $ft-bg-color: #f4f4f4;
 $zoombar-bg-color: white;
 $ft-line-height: 20px;
@@ -16,8 +17,8 @@ $z-index: 1000;
 @mixin absolute-position {
   z-index: $z-index;
   position: absolute;
-  border-top: 1px solid $border-color;
-  border-bottom: 1px solid $border-color;
+  border-top: $border-color-detail;
+  border-bottom: $border-color-detail;
 }
 
 @mixin display-flex-1 {
@@ -105,11 +106,35 @@ $z-index: 1000;
           height: 20px;
           vertical-align: middle;
         }
+        .fce-tool-bar-ext {
+          display: none;
+        }
+        .fce-tool-bar-temp {
+          @include absolute-position;
+          display: block;
+          min-width: 40px;
+          visibility: hidden;
+        }
       }
       .fce-tool-bar:hover {
         @include bar-hover;
       }
-      .fce-tool-bar-active,
+      .fce-tool-bar-active {
+        background-color: $bar-bg-active;
+        border-left: $border-color-detail;
+        border-right: $border-color-detail;
+        border-bottom: none;
+        .fce-tool-bar-ext {
+          @include absolute-position;
+          background-color: $tbs-bg-color;
+          border-bottom: none;
+          border-left: $border-color-detail;
+          border-right: $border-color-detail;
+          display: block;
+          line-height: 35px;
+          min-width: 40px;
+        }
+      }
       .fce-tool-bar-active:hover {
         background-color: $bar-bg-active;
       }
