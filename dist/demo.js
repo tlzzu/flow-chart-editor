@@ -2,27 +2,22 @@ var fce;
 window.onload = function() {
   fce = new FCE({
     el: document.getElementById("fce"),
-    toolbars: {
-      activeClass: "fce-tool-bar-active",
-      activeName: "",
-      className: "fce-tool-bars",
-      change() {},
-      bars: [{
-          name: "save",
-          icon: require("../../images/icon/pointer.png"),
-          className: "fce-tool-bar",
-          title: "指针",
-          click() {}
-        },
-        {
-          name: "import",
-          icon: require("../../images/icon/line-solid.png"),
-          className: "fce-tool-bar",
-          title: "连线",
-          click() {}
-        }
-      ]
-    }
+    toolbars: [{
+        name: "save",
+        icon: "images/pointer.png",
+        className: "fce-tool-bar",
+        title: "指针",
+        click() {}
+      },
+      {
+        name: "import",
+        icon: "images/line-solid.png",
+        className: "fce-tool-bar",
+        title: "连线",
+        click() {}
+      },
+      "animation"
+    ]
   });
 };
 
