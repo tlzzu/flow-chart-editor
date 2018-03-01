@@ -34,24 +34,26 @@ Basebar.prototype = {
   //     //这里要改变this指向
   //     this.options.click.call(this, item);
   //   },
+  hasClass(className) { 
+    return this.dom.classList.contains(className);
+  },
   addClass(classNames) {
     if (!classNames) return;
-    const arr = utils.trim(classNames).split(/\s+/);
-    for (let i = 0, l = arr.length; i < l; i++) {
-      const className = arr[i];
-      if (!this.dom.classList.contains(className)) {
-        this.dom.classList.add(className);
+    const arr = utils.classNamesToArray(classNames),self=this;
+    utils.forEach(arr, function (className) {
+      if (!self.dom.classList.contains(className)) {
+        self.dom.classList.add(className);
       }
-    }
+    });
   },
   removeClass(classNames) {
-    const arr = utils.trim(classNames).split(/\s+/);
-    for (let i = 0, l = arr.length; i < l; i++) {
-      const className = arr[i];
-      if (this.dom.classList.contains(className)) {
-        this.dom.classList.remove(className);
+    if (!classNames) return;
+    const arr = utils.classNamesToArray(classNames), self = this;
+    utils.forEach(arr, function (className) {
+      if (self.dom.classList.contains(className)) {
+        self.dom.classList.remove(className);
       }
-    }
+    });
   }
 };
 

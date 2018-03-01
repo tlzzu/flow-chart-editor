@@ -7,7 +7,15 @@ export default {
     return str ? str.replace(/(^[ \t\n\r]+)|([ \t\n\r]+$)/g, "") : "";
   },
   /**
-   * 循环方法
+   * 将字符串按照规定切割符分割为数组
+   * @param {String} str 数组
+   * @param {String} splitStr  分隔符
+   */
+  classNamesToArray(str,splitStr=/\s+/) { 
+    return this.trim(str).split(splitStr);
+  },
+  /**
+   * 循环方法  
    * @param {Array} arr 数组
    * @param {Function} handler  如果返回true，则中断不予返回
    */

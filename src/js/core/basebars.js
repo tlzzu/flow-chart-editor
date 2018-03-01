@@ -44,14 +44,26 @@ Basebars.prototype = listener;
  * 设置激活状态的bar
  * @param {String} name 当前bar的活动名
  */
-Basebars.prototype.setActiveBar = function(name) {
+Basebars.prototype.setActiveBar = function (name) {
   if (!this.bars[name]) return;
-  for (let b in this.bars) {
-    const bar = this.bars[b];
-    bar.removeClass(this.options.activeClass);
-  }
+  this.cancelActiveBar(name);
   this.bars[name].addClass(this.options.activeClass);
   this.activeBar = this.bars[name];
+};
+Basebars.prototype.cancelActiveBar = function (name) {
+  if (!name && this.activeBar) {
+    this.activeBar.removeClass(this.options.activeClass);
+  } else { 
+    if (!this.bars[name]) return;
+    for (let b in this.bars) {
+      const bar = this.bars[b];
+      if (bar.hasClass(this.options.activeClass)) {
+        bar.removeClass(this.options.activeClass);
+        this.activeBar = null;
+      }
+    }
+  }
+  this.activeBar = null;
 };
 //基础
 export default Basebars;

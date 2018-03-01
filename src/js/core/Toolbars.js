@@ -24,7 +24,10 @@ const initListener = function() {
         const name = current.getAttribute ?
           current.getAttribute("name") :
           undefined;
-        if (name) {
+        if (this.activeBar&&this.activeBar.name===name) { 
+          this.cancelActiveBar(name);
+          //todo  取消选中
+        }else if (name) {
           this.setActiveBar(name);
           this.fireEvent("change", this.bars[name]);
         }
