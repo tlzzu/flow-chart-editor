@@ -71,6 +71,10 @@ export default {
    * @param {Object} params
    */
   registerEvent(ele, type, handler, params) {
+    if (!ele) { 
+      console.error('绑定事件时Element实例为空！');
+      return;
+    }
     if (ele.addEventListener) {
       ele.addEventListener(type, handler, params, false);
     } else if (ele.attachEvent) {

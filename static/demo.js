@@ -7,27 +7,21 @@ window.onload = function() {
         icon: "images/rectangle.png",
         className: "fce-tool-bar",
         title: "矩形",
-        exec() {
-          debugger;
-        }
+        exec() {}
       },
       {
         name: "rounded_rectangle",
         icon: "images/rounded_rectangle.png",
         className: "fce-tool-bar",
         title: "圆角矩形",
-        exec() {
-          debugger;
-        }
+        exec() {}
       },
       {
         name: "choice",
         icon: "images/choice.png",
         className: "fce-tool-bar",
         title: "菱形",
-        exec() {
-          debugger;
-        }
+        exec() {}
       },
 
       {
@@ -43,7 +37,7 @@ window.onload = function() {
     ]
   });
   fce.addListener("click", function() {
-    debugger;
+    console.log("编辑器被点击！");
   });
 };
 

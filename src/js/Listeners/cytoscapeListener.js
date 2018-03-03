@@ -6,7 +6,7 @@ export default function() {
       self.toolbars.activeBar.options &&
       self.toolbars.activeBar.options.exec
     ) {
-      self.toolbars.activeBar.options.exec.call(self);
+      self.toolbars.activeBar.options.exec.apply(self, arguments);
     }
     self.fireEvent("click");
   });

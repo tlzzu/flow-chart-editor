@@ -1,5 +1,6 @@
-import { cytoscape, jquery } from "./dependencies";
-import listener from './cytoscapeListener';
+import listener from "./Listeners/cytoscapeListener";
+import { cytoscape, jquery } from "./lib";
+
 const cyOption = {
   //container: allElements["cy"],
   // boxSelectionEnabled: false,
@@ -11,9 +12,9 @@ const cyOption = {
   zoomDelay: 45,
   elements: {
     nodes: [
-      { data: { id: "n1", label: "Tap me1" } },
-      { data: { id: "n2", label: "Tap me2" } },
-      { data: { id: "n3", label: "Tap me3" } }
+      { data: { id: "n1", label: "Tap me1" }, position: { x: 10, y: 10 } },
+      { data: { id: "n2", label: "Tap me2" }, position: { x: 170, y: -10 } },
+      { data: { id: "n3", label: "Tap me3" }, position: { x: 70, y: -70 } }
     ],
     edges: [{ data: { source: "n1", target: "n2", id: "e1" } }]
   },
@@ -147,7 +148,7 @@ const initCy = function(options) {
   //默认取消连线扩展
   edgehandles.disable();
   self.cy = cy;
-  
+
   self.cyExtensions = {
     gridGuide,
     undoRedo,
@@ -155,7 +156,8 @@ const initCy = function(options) {
     edgeBendEditing,
     viewUtilities,
     contextMenus
-  }; listener.call(self);
+  };
+  listener.call(self);
 };
 
 export { initCy };

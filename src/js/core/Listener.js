@@ -15,11 +15,11 @@ import utils from "../utils/index";
  */
 const addListener = function(types, listener) {
   if (!types) return;
-  const typeArray = utils.trim(types).split(/\s+/),
+  const typeArray = utils.classNamesToArray(types),
     self = this;
-  for (let i = 0, l = typeArray.length; i < l; i++) {
-    getListener.call(self, typeArray[i]).push(listener);
-  }
+  utils.forEach(typeArray, function(type) {
+    getListener.call(self, type).push(listener);
+  });
 };
 /**
  * 移除监听的方法
@@ -44,27 +44,34 @@ const removeListener = function(type, listener) {
 const getListener = function(type) {
   const listeners = this.__allListeners__;
   type = type.toLowerCase();
-  return listeners[type] ? listeners[type] : [];
+  if (listeners[type]) {
+    return listeners[type];
+  } else {
+    console.error("不存在该[" + type + "]类型事件！");
+    console.trace();
+    return [];
+  }
+  //return listeners[type] ? listeners[type] : [];
 };
 /**
  * 触发事件
  */
 const fireEvent = function() {
-  const types = arguments[0];
-  if (!types) return;
-  const typeArray = utils.trim(types).split(/\s+/),
-    self = this;
-  for (let i = 0, l = typeArray.length; i < l; i++) {
-    const type = typeArray[i],
-      listeners = getListener.call(self, type);
+  const args = arguments,
+    types = args[0],
+    self = this,
+    typeArray = utils.classNamesToArray(types);
+  if (!typeArray && !typeArray.length) return;
+  utils.forEach(typeArray, function(type) {
+    const listeners = getListener.call(self, type);
     if (listeners) {
       let index = listeners.length;
       while (index--) {
         if (!listeners[index]) continue;
-        listeners[index].apply(self, arguments);
+        listeners[index].apply(self, args);
       }
     }
-  }
+  });
 };
 
 export default { addListener, removeListener, fireEvent };

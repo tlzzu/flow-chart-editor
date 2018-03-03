@@ -1,84 +1,80 @@
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-var CopyWebpackPlugin = require('copy-webpack-plugin')
-
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+var CopyWebpackPlugin = require("copy-webpack-plugin");
+const version = "1.0.0";
 module.exports = {
   entry: {
-    index: './src/js/index.js',
-    // default: './src/css/default.scss'
+    index: "./src/js/index.js"
   },
-  devtool: 'eval-source-map', // 'source-map', // http://www.jianshu.com/p/42e11515c10f
+  devtool: "eval-source-map", // 'source-map', // http://www.jianshu.com/p/42e11515c10f
   output: {
-    path: path.join(__dirname, '../dist/'),
-    filename: 'js/fce.[hash].min.js'
+    filename: "js/fce." + version + ".min.js",
+    path: path.join(__dirname, "../dist/")
   },
   module: {
     rules: [{
         test: /\.js$/,
-        exclude: path.join(__dirname, 'node_modules'),
+        exclude: path.join(__dirname, "node_modules"),
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           query: {
-            presets: ['es2015']
+            presets: ["es2015"]
           }
         },
-        include: path.join(__dirname, 'src')
+        include: path.join(__dirname, "src")
       },
-      { // css / sass / scss loader for webpack
+      {
+        // css / sass / scss loader for webpack
         test: /\.(css|sass|scss)$/,
         use: ExtractTextPlugin.extract({
-          use: ['css-loader', 'sass-loader']
+          use: ["css-loader?minimize", "sass-loader?minimize"]
         })
-      }, {
+      },
+      {
         test: /\.less$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'autoprefixer-loader', 'less-loader'],
-          publicPath: '../'
-        })
+        use: ["css-loader", "sass-loader"]
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/,
-        use: [
-          { loader: 'file-loader?limit=1024&name=images/[name].[ext]' }
-        ]
+        loader: "url-loader",
+        query: { mimetype: "image/png" }
       },
       {
         test: /\.html$/,
-        use: [
-          { loader: 'html-loader' }
-        ]
+        use: [{ loader: "html-loader" }]
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: [
-          { loader: 'file-loader?limit=1024&name=fonts/[name].[ext]' }
-        ]
+        use: [{ loader: "file-loader?limit=1024&name=fonts/[name].[ext]" }]
       },
       {
         test: /\.handlebars$/,
-        use: [
-          { loader: 'handlebars-loader' }
-        ]
+        use: [{ loader: "handlebars-loader" }]
       }
     ]
   },
   node: {
-    fs: 'empty'
+    fs: "empty"
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      filename: path.join(__dirname, '..', '/dist/index.html'),
-      template: './src/index.html',
-      inject: 'head', // 在head中插入js
-      chunks: ['index']
+    new ExtractTextPlugin({
+      filename: "css/fce." + version + ".min.css",
+      disable: false,
+      allChunks: true
     }),
-    new ExtractTextPlugin({ filename: 'css/[name].min.css', disable: false, allChunks: true }),
+    new HtmlWebpackPlugin({
+      filename: path.join(__dirname, "..", "/dist/index.html"),
+      template: "./src/index.html",
+      inject: "head", // 在head中插入js
+      chunks: ["index"],
+      hash: true
+    }),
+
     new CopyWebpackPlugin([{
-      from: path.resolve(__dirname, '../static'),
-      to: '',
-      ignore: ['.*']
+      from: path.resolve(__dirname, "../static"),
+      to: "",
+      ignore: [".*"]
     }])
   ]
-}
+};

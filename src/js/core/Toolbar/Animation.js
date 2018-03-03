@@ -1,7 +1,7 @@
 import utils from "../../utils/index";
 export default {
   name: "animation",
-  icon: "images/animation.png",
+  icon: require("../../../images/animation.png"),
   className: "fce-tool-bar fce-tool-bar-animation",
   title: "动画",
   render() {
@@ -11,6 +11,7 @@ export default {
     this.dom.appendChild(div);
     div.style.left = ~~(
       this.dom.offsetLeft -
+      1 -
       (div.parentElement.offsetWidth - div.offsetWidth) / 2
     ) + "px"; //-1是边框
     div.className = "fce-tool-bar-ext";

@@ -2,7 +2,7 @@ import Basebars from "./basebars";
 import Toolbar from "./Toolbar";
 import utils from "../utils/index";
 import ToolbarItems from "./Toolbar/index";
-import { jquery } from "../dependencies";
+import { jquery } from "../lib";
 
 const defaultOptions = {
     activeClass: "fce-tool-bar-active",
@@ -12,7 +12,7 @@ const defaultOptions = {
     bars: null
   },
   barClassName = "fce-tool-bar";
-const initListener = function() {
+const insideListener = function() {
   const self = this;
   utils.registerEvent(
     this.dom,
@@ -64,10 +64,16 @@ const Toolbars = function(options) {
     change: [] //change事件
   };
   Basebars.call(this);
-  initListener.call(this);
+
   if (this.options.activeName) {
     this.setActiveBar(this.options.activeName);
   }
+
+  const _render = this.render;
+  this.render = function() {
+    _render.call(this);
+    insideListener.call(this);
+  };
 };
 Toolbars.prototype = new Basebars();
 Toolbars.prototype.constructor = Toolbars;

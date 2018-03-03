@@ -121,8 +121,8 @@ $z-index: 1000;
       }
       .fce-tool-bar-active {
         background-color: $bar-bg-active;
-        border-left: $border-color-detail;
-        border-right: $border-color-detail;
+        // border-left: $border-color-detail;
+        // border-right: $border-color-detail;
         border-bottom: none;
         .fce-tool-bar-ext {
           @include absolute-position;

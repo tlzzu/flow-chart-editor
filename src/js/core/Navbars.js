@@ -12,21 +12,21 @@ const defaultOptions = {
       icon: require("../../images/icon/pointer.png"),
       className: "fce-nav-bar",
       title: "指针",
-      click() {}
+      exec() {}
     },
     {
       name: "line",
       icon: require("../../images/icon/line-solid.png"),
       className: "fce-nav-bar",
       title: "连线",
-      click() {}
+      exec() {}
     }
   ]
 };
-const initListener = function() {
+const insideListener = function() {
   const self = this;
   utils.registerEvent(
-    this.dom,
+    self.dom,
     "click",
     function(evt) {
       // 往上找，找到 fce-base-bar 的name，作为对比
@@ -56,13 +56,11 @@ const Navbars = function(options) {
     change: [] //change事件
   };
   Basebars.call(this);
-  initListener.call(this);
-  // this.render = function() {
-  //   if (this.options.activeName) {
-  //     this.setActiveBar(this.options.activeName);
-  //   }
-  //   debugger;
-  // };
+  const _render = this.render;
+  this.render = function() {
+    _render.call(this);
+    insideListener.call(this);
+  };
 };
 Navbars.prototype = new Basebars();
 Navbars.prototype.constructor = Navbars;
