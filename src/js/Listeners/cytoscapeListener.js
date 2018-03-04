@@ -3,6 +3,7 @@ export default function() {
   const self = this;
   self.cy.on("tap", function(evt) {
     //只有nav没有控件选中时才可以添加，否则就是移动
+
     if (!self.navbars.activeBar) {
       const clickType = getClickType(evt),
         clickObject = clickType && evt.target ? evt.target.data() : null;
@@ -22,6 +23,11 @@ export default function() {
         );
       }
       self.fireEvent("add_click", evt, clickType, clickObject);
+    }
+  });
+  self.cy.on("select", "node", function(evt) {
+    if (!(self.navbars.activeBar && self.navbars.activeBar.name === "pointer")) {
+      self.cyExtensions.nodeResize.removeGrapples();
     }
   });
 }

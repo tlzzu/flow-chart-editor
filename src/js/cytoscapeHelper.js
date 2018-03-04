@@ -1,6 +1,6 @@
 import listener from "./Listeners/cytoscapeListener";
 import { cytoscape, jquery } from "./lib";
-import { getClickType } from './utils/cy'
+import { getClickType } from './utils/cy';
 
 const cyOption = {
   //container: allElements["cy"],
@@ -159,6 +159,17 @@ const cyOption = {
         "border-opacity": "0.5",
         "background-color": "yellow", // "#77828C",
         "text-outline-color": "#77828C"
+      }
+    }, {
+      selector: '.eh-handle',
+      style: {
+        'background-color': 'red',
+        width: 10,
+        height: 10,
+        shape: 'ellipse',
+        'overlay-opacity': 0,
+        'border-width': 12, // makes the handle easier to hit
+        'border-opacity': 0
       }
     }
   ]
