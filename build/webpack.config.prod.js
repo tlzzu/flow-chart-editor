@@ -9,7 +9,9 @@ const MyHtmlwebpackPlugin = require("./MyHtmlwebpackPlugin.js");
 //设置排除项
 baseWebpackConfig.externals = {
   jquery: "jQuery",
+  "konva":"konva",
   cytoscape: "cytoscape",
+  "cytoscape-node-resize": "nodeResize",
   "cytoscape-grid-guide": "gridGuide",
   "cytoscape-edgehandles": "edgehandles",
   "cytoscape-context-menus": "contextMenus",
@@ -20,8 +22,10 @@ baseWebpackConfig.externals = {
 module.exports = merge(baseWebpackConfig, {
   plugins: [
     new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: '"prod"'
+      "process": {
+        env: {
+          NODE_ENV: "prod"
+        }
       }
     }),
     //扩展插入外部脚本
@@ -31,6 +35,8 @@ module.exports = merge(baseWebpackConfig, {
         js: [
           "js/lib/cytoscape.js",
           "js/lib/jquery.js",
+          "js/lib/konva.min.js",
+          "js/lib/cytoscape-node-resize.js",
           "js/lib/cytoscape-grid-guide.js",
           "js/lib/cytoscape-edgehandles.js",
           "js/lib/cytoscape-context-menus.js",

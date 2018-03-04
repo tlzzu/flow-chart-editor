@@ -35,6 +35,11 @@ const insideListener = function() {
         const name = current.getAttribute ?
           current.getAttribute("name") :
           undefined;
+        //取消toolbar的选中状态
+        if (this.fce.toolbars.activeBar) {
+          this.fce.toolbars.cancelActiveBar(this.fce.toolbars.activeBar.name);
+        }
+
         if (name) {
           this.setActiveBar(name);
           this.fireEvent("change", this.bars[name]);

@@ -26,9 +26,11 @@ const insideListener = function() {
           undefined;
         if (this.activeBar && this.activeBar.name === name) {
           this.cancelActiveBar(name);
+          this.fce.navbars.setActiveBar("pointer");
           //todo  取消选中
         } else if (name) {
           this.setActiveBar(name);
+          this.fce.navbars.cancelActiveBar(this.fce.navbars.activeBar.name);
           this.fireEvent("change", this.bars[name]);
         }
       }

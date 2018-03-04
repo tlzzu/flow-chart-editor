@@ -1,5 +1,6 @@
 import listener from "./Listeners/cytoscapeListener";
 import { cytoscape, jquery } from "./lib";
+import { getClickType } from './utils/cy'
 
 const cyOption = {
   //container: allElements["cy"],
@@ -10,14 +11,6 @@ const cyOption = {
   zoom: 1,
   minZoom: 0.1,
   zoomDelay: 45,
-  elements: {
-    nodes: [
-      { data: { id: "n1", label: "Tap me1" }, position: { x: 10, y: 10 } },
-      { data: { id: "n2", label: "Tap me2" }, position: { x: 170, y: -10 } },
-      { data: { id: "n3", label: "Tap me3" }, position: { x: 70, y: -70 } }
-    ],
-    edges: [{ data: { source: "n1", target: "n2", id: "e1" } }]
-  },
   layout: {
     name: "preset"
   },
@@ -28,6 +21,114 @@ const cyOption = {
         content: "data(label)",
         // width: 'mapData(weight, 40, 80, 20, 60)',
         "text-valign": "center"
+      }
+  },
+  {
+    selector: "node.fce-shape-ellipse",
+    style: {
+       shape: 'ellipse',
+    }
+    },
+    {
+      selector: "node.fce-shape-triangle",
+      style: {
+         shape: 'triangle',
+      }
+    },
+    {
+      selector: "node.fce-shape-rectangle",
+      style: {
+         shape: 'rectangle',
+      }
+    },
+    {
+      selector: "node.fce-shape-roundrectangle",
+      style: {
+         shape: 'roundrectangle',
+      }
+    },
+    {
+      selector: "node.fce-shape-bottomroundrectangle",
+      style: {
+         shape: 'bottomroundrectangle',
+      }
+    },
+    {
+      selector: "node.fce-shape-cutrectangle",
+      style: {
+         shape: 'cutrectangle',
+      }
+    },
+    {
+      selector: "node.fce-shape-barrel",
+      style: {
+         shape: 'barrel',
+      }
+    },
+    {
+      selector: "node.fce-shape-rhomboid",
+      style: {
+         shape: 'rhomboid',
+      }
+    },
+    {
+      selector: "node.fce-shape-diamond",
+      style: {
+         shape: 'diamond',
+      }
+    },
+    {
+      selector: "node.fce-shape-pentagon",
+      style: {
+         shape: 'pentagon',
+      }
+    },
+    {
+      selector: "node.fce-shape-hexagon",
+      style: {
+         shape: 'hexagon',
+      }
+    },
+    {
+      selector: "node.fce-shape-concavehexagon",
+      style: {
+         shape: 'concavehexagon',
+      }
+    },
+    {
+      selector: "node.fce-shape-heptagon",
+      style: {
+         shape: 'heptagon',
+      }
+    },
+    {
+      selector: "node.fce-shape-octagon",
+      style: {
+         shape: 'octagon',
+      }
+    },
+    {
+      selector: "node.fce-shape-star",
+      style: {
+         shape: 'star',
+      }
+    },
+    {
+      selector: "node.fce-shape-tag",
+      style: {
+         shape: 'tag',
+      }
+    },
+    {
+      selector: "node.fce-shape-vee",
+      style: {
+         shape: 'vee',
+      }
+    },
+    {
+      selector: "node.fce-shape-polygon",
+      style: {
+         shape: 'polygon',
       }
     },
     {
@@ -85,7 +186,29 @@ const initCy = function(options) {
       }
     }),
     //右键 contextMenus
-    contextMenus = cy.contextMenus({ menuItems: [] }),
+    contextMenus = cy.contextMenus({
+      menuItems: [{
+        id: "fce_rename",
+        content: "重命名",
+        tooltipText: "重命名",
+        selector: "node,edge", 
+        onClickFunction: function(evt) {
+          var target = evt.target || evt.cyTarget,clickType=getClickType(evt);
+          self.fireEvent('context_menus_rename', evt, clickType, target.data());
+        },
+        hasTrailingDivider:true
+      },{
+        id: "fce_delete",
+        content: "删除",
+        tooltipText: "删除",
+        selector: "node,edge", 
+        onClickFunction: function(evt) {
+          var target = evt.target || evt.cyTarget,clickType=getClickType(evt);
+          self.fireEvent('context_menus_remove', evt, clickType, target.data());
+        },
+        hasTrailingDivider:true
+      }]
+    }),
     //连线
     edgehandles = cy.edgehandles({
       preview: true,
@@ -131,6 +254,9 @@ const initCy = function(options) {
       addBendMenuItemTitle: "添加弯曲点",
       removeBendMenuItemTitle: "移除弯曲点"
     }),
+    nodeResize = cy.nodeResize({
+      undoable: true
+    }),
     //初始化撤销、重做
     undoRedo = cy.undoRedo({
       isDebug: false,
@@ -155,7 +281,8 @@ const initCy = function(options) {
     edgehandles,
     edgeBendEditing,
     viewUtilities,
-    contextMenus
+    contextMenus,
+    nodeResize
   };
   listener.call(self);
 };
