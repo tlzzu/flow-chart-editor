@@ -69,4 +69,35 @@ const Navbars = function(options) {
 };
 Navbars.prototype = new Basebars();
 Navbars.prototype.constructor = Navbars;
+/**
+ * 设置nav的活跃bar
+ * @param {String} name 如果那么、为空，则为初始化
+ */
+Navbars.prototype.setNavActiveBar = function(name) {
+  const self = this.fce;
+  if (!name || name === "pointer") {
+    self.__allElements__["cy"].style.cursor = "default";
+    const handleNodes = self.cy.$(
+      ".eh-handle,.eh-hover,.eh-source,.eh-target,.eh-preview,.eh-ghost-edge"
+    );
+    if (handleNodes && handleNodes.length > 0) {
+      self.cy.remove(handleNodes);
+    }
+    self.cyExtensions["edgehandles"].disable();
+    if (name) {
+      this.setActiveBar("pointer");
+    } else if (!name) {
+      if (this.activeBar) { 
+        this.cancelActiveBar(this.activeBar.name);
+      }
+    }
+  } else if (name === "line") {
+    self.__allElements__["cy"].style.cursor = "crosshair";
+    self.cyExtensions["edgehandles"].enable();
+    this.setActiveBar("line");
+  } else {
+    console.error("未知nav-bar!");
+    console.error(name);
+  }
+};
 export default Navbars;
