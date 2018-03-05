@@ -7,7 +7,7 @@ export default {
   render() {
     const div = document.createElement("div");
     div.className = "fce-tool-bar-temp";
-    div.innerHTML = "test";
+    //todo 添加动画bar的样式效果
     this.dom.appendChild(div);
     div.style.left = ~~(
       this.dom.offsetLeft -

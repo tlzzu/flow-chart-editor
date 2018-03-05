@@ -135,7 +135,6 @@ FCE.prototype.remove = function(id) {
 // FCE.prototype.renameNode = function () { };
 // FCE.prototype.renameEdge = function () { };
 FCE.prototype.import = function (json) {
-  //todo 导入数据 重新new cy
   json = (typeof json === 'string') ? JSON.parse(json) : json;
   this.cy.json({
     elements: json.elements,
@@ -199,7 +198,6 @@ FCE.prototype.exportFile = function(type, fileName = new Date().toJSON()) {
  * 注销
  */
 FCE.prototype.destroy = function() {
-  //todo 查找toolbar对象
   this.__private__.allElements.root.remove();
   this.cy.destroy();
 };

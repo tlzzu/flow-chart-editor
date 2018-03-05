@@ -29,6 +29,6 @@ export default function() {
     if (!(self.navbars.activeBar && self.navbars.activeBar.name === "pointer")) {
       self.cyExtensions.nodeResize.removeGrapples();
     }
-    //todo 这里需要出发选中节点事件
+    //todo 这里需要出发选中节点事件，给予监听
   });
 }
