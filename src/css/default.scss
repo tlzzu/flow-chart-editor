@@ -36,6 +36,12 @@ $z-index: 1000;
 }
 
 .fce {
+  .canvas-pointer canvas {
+    cursor: default;
+  }
+  .canvas-line canvas {
+    cursor: crosshair;
+  }
   position: relative;
   width: 100%;
   height: 100%;
@@ -58,7 +64,7 @@ $z-index: 1000;
   }
   .fce-searcher {
     @include absolute-position;
-    z-index: $z-index+1;
+    z-index: $z-index + 1;
     right: 0;
     top: 0;
     padding-right: 5px;
@@ -97,7 +103,7 @@ $z-index: 1000;
     line-height: $tbs-line-height;
     border-top: 0;
     .fce-tool-bars {
-      .fce-tool-bar {
+      .fce-base-bar {
         float: left;
         line-height: 35px;
         padding: 0 10px;
@@ -116,7 +122,7 @@ $z-index: 1000;
           visibility: hidden;
         }
       }
-      .fce-tool-bar:hover {
+      .fce-base-bar:hover {
         @include bar-hover;
       }
       .fce-tool-bar-active {

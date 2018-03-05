@@ -55,9 +55,10 @@ const insideListener = function() {
  */
 const Navbars = function(options) {
   this.options = options || defaultOptions;
+  if (!this.__private__) this.__private__ = {};
   //bar的类型
   this.BarType = Navbar;
-  this.__allListeners__ = {
+  this.__private__.allListeners = {
     change: [] //change事件
   };
   Basebars.call(this);
@@ -76,26 +77,33 @@ Navbars.prototype.constructor = Navbars;
 Navbars.prototype.setNavActiveBar = function(name) {
   const self = this.fce;
   if (!name || name === "pointer") {
-    self.__allElements__["cy"].style.cursor = "default";
+    self.__private__.allElements.cy.classList.remove("canvas-line");
+    self.__private__.allElements.cy.classList.add("canvas-pointer");
     const handleNodes = self.cy.$(
       ".eh-handle,.eh-hover,.eh-source,.eh-target,.eh-preview,.eh-ghost-edge"
     );
     if (handleNodes && handleNodes.length > 0) {
       self.cy.remove(handleNodes);
     }
-    self.cyExtensions["edgehandles"].disable();
+    self.cyExtensions.edgehandles.disable();
+
     if (name) {
       this.setActiveBar("pointer");
     } else if (!name) {
-      if (this.activeBar) { 
+      self.cyExtensions.nodeResize.removeGrapples();
+      if (this.activeBar) {
         this.cancelActiveBar(this.activeBar.name);
       }
     }
   } else if (name === "line") {
-    self.__allElements__["cy"].style.cursor = "crosshair";
-    self.cyExtensions["edgehandles"].enable();
+    self.__private__.allElements.cy.classList.remove("canvas-pointer");
+    self.__private__.allElements.cy.classList.add("canvas-line");
+    self.cyExtensions.edgehandles.enable();
+    self.cyExtensions.nodeResize.removeGrapples();
     this.setActiveBar("line");
   } else {
+    self.__private__.allElements.cy.classList.remove("canvas-line");
+    self.__private__.allElements.cy.classList.add("canvas-pointer");
     console.error("未知nav-bar!");
     console.error(name);
   }

@@ -5,7 +5,7 @@ window.onload = function() {
     toolbars: [{
         name: "rectangle",
         icon: "images/rectangle.png",
-        className: "fce-tool-bar",
+        className: "",
         title: "矩形",
         exec(evt, clickType, obj) {
           const label = prompt("请输入节点名称："),
@@ -20,7 +20,7 @@ window.onload = function() {
       {
         name: "rounded_rectangle",
         icon: "images/rounded_rectangle.png",
-        className: "fce-tool-bar",
+        className: "",
         title: "圆角矩形",
         exec(evt, clickType, obj) {
           const label = prompt("请输入节点名称："),
@@ -35,7 +35,7 @@ window.onload = function() {
       {
         name: "choice",
         icon: "images/choice.png",
-        className: "fce-tool-bar",
+        className: "",
         title: "菱形",
         exec(evt, clickType, obj) {
           const label = prompt("请输入节点名称："),
@@ -50,7 +50,7 @@ window.onload = function() {
       {
         name: "round",
         icon: "images/round.png",
-        className: "fce-tool-bar",
+        className: "",
         title: "圆形",
         exec(evt, clickType, obj) {
           const label = prompt("请输入节点名称："),
@@ -60,6 +60,68 @@ window.onload = function() {
             data.parent = obj.id;
           }
           this.addNode(data, "ellipse");
+        }
+      },
+      {
+        name: "download-json",
+        icon: "images/download.png",
+        className: "",
+        title: "下载json文件",
+        click(bar) {
+          this.exportFile("json", "导出JSON文件");
+          bar.cancelActive(); //取消自身选中
+        }
+      },
+      {
+        name: "download-png",
+        icon: "images/download.png",
+        className: "",
+        title: "下载png文件",
+        click(bar) {
+          this.exportFile("png");
+          bar.cancelActive(); //取消自身选中
+        }
+      },
+      {
+        name: "download-jpg",
+        icon: "images/download.png",
+        className: "",
+        title: "下载jpg文件",
+        click(bar) {
+          this.exportFile("jpg");
+          bar.cancelActive(); //取消自身选中
+        }
+      },
+
+      {
+        name: "import",
+        icon: "images/import.png",
+        className: "",
+        title: "导入JSON文件",
+        click(bar) {
+          bar.cancelActive(); //取消自身选中
+          var file = document.createElement("input"),self=this;
+          file.setAttribute("type", "file");
+          file.onchange = function(evt) {
+            var target = evt.target;
+            if (target.files && target.files.length) {
+              var fileInfo = target.files[0],
+                name = fileInfo.name;
+              if (!name.toLowerCase().endsWith(".json")) {
+                alert("上传文件类型不符合要求！");
+              } else {
+                var reader = new FileReader();
+                reader.onload = function(evt) {
+                  var json = JSON.parse(evt.target.result.toString());
+                  self.import(json);
+                };
+                reader.readAsText(fileInfo);
+              }
+            }
+          };
+          file.click();
+          // this.import(json);
+          // bar.cancelActive(); //取消自身选中
         }
       },
       "animation"

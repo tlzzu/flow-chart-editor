@@ -14,8 +14,8 @@ const DEFAULT_WIDTH = 10,
     ]
   };
 const _resetActiveDom = function() {
-  const items = this.__options__.items,
-    item = this.__selectItem__;
+  const items = this.__private__.options.items,
+    item = this.__private__.selectItem;
   for (let i = 0, l = items.length; i < l; i++) {
     if (items[i].value === item.value) {
       this.activeDom.style.top = ~~(DEFAULT_HEIGHT * (1 - i / (l - 1)) - DEFAULT_WIDTH / 2) +
@@ -23,18 +23,18 @@ const _resetActiveDom = function() {
         "px";
     }
   }
-  this.activeDom.setAttribute("title", this.__selectItem__.label);
+  this.activeDom.setAttribute("title", this.__private__.selectItem.label);
 };
 /**
  * 重新设置当前位置
  * @param {Boolean} bo 是否第一次加载，默认为否
  */
 const _resetValue = function(bo = false) {
-  const item = this.__selectItem__;
+  const item = this.__private__.selectItem;
   _resetActiveDom.call(this);
   if (!bo) {
-    for (let i = 0, l = this.__changeListeners__.length; i < l; i++) {
-      this.__changeListeners__[i].call(this, item);
+    for (let i = 0, l = this.__private__.changeListeners.length; i < l; i++) {
+      this.__private__.changeListeners[i].call(this, item);
     }
   }
 };
@@ -94,7 +94,7 @@ const _createZoomElement = function() {
   _defalut.style.width = DEFAULT_WIDTH + "px";
   _defalut.setAttribute("title", "正常");
   utils.registerEvent(_defalut, "click", function() {
-    self.set(self.__options__.defaultSize);
+    self.set(self.__private__.options.defaultSize);
   });
   root.appendChild(_defalut);
   const active = document.createElement("div");
@@ -121,9 +121,10 @@ const _createZoomElement = function() {
  */
 const Zoom = function(options) {
   options = options || zoomOption;
-  this.__selectItem__ = _getItem(options.items, options.defaultSize); //{label:'正常',value:0}
-  this.__changeListeners__ = [];
-  this.__options__ = options;
+  if (!this.__private__) this.__private__ = {};
+  this.__private__.selectItem = _getItem(options.items, options.defaultSize); //{label:'正常',value:0}
+  this.__private__.changeListeners = [];
+  this.__private__.options = options;
   this.dom = _createZoomElement.call(this);
   _resetValue.call(this, true);
 };
@@ -133,11 +134,11 @@ Zoom.prototype = {
    * @param {Number} value 设置为多少倍
    */
   set: function(value) {
-    const temp = _getItem(this.__options__.items, value);
-    if (temp.value === this.__selectItem__.value) {
+    const temp = _getItem(this.__private__.options.items, value);
+    if (temp.value === this.__private__.selectItem.value) {
       return;
     }
-    this.__selectItem__ = temp;
+    this.__private__.selectItem = temp;
     _resetValue.call(this);
   },
   /**
@@ -145,7 +146,7 @@ Zoom.prototype = {
    * @returns {Number} 返回当前值
    */
   get: function() {
-    return this.__selectItem__.value;
+    return this.__private__.selectItem.value;
   },
   /**
    * 设置倍数
@@ -153,14 +154,14 @@ Zoom.prototype = {
    */
   times: function(mult = 0) {
     const temp = _getItem(
-      this.__options__.items,
-      this.__selectItem__.value,
+      this.__private__.options.items,
+      this.__private__.selectItem.value,
       mult
     );
-    if (temp.value === this.__selectItem__.value) {
+    if (temp.value === this.__private__.selectItem.value) {
       return;
     }
-    this.__selectItem__ = temp;
+    this.__private__.selectItem = temp;
     _resetValue.call(this);
   },
   getCyZoom: function(item) {
@@ -184,13 +185,13 @@ Zoom.prototype = {
    * 绑定变化时的监听函数
    */
   addChange: function(handler) {
-    this.__changeListeners__.push(handler);
+    this.__private__.changeListeners.push(handler);
   },
   /**
    * 移除监听
    */
   removeChange: function(handler) {
-    const listeners = this.__changeListeners__;
+    const listeners = this.__private__.changeListeners;
     for (let i = 0, l = listeners.length; i < l; i++) {
       const listener = listeners[i];
       if (listener === handler) {

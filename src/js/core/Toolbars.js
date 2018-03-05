@@ -11,7 +11,7 @@ const defaultOptions = {
     change() {},
     bars: null
   },
-  barClassName = "fce-tool-bar";
+  barClassName = "fce-base-bar"; //"fce-tool-bar";
 const insideListener = function() {
   const self = this;
   utils.registerEvent(
@@ -24,47 +24,52 @@ const insideListener = function() {
         const name = current.getAttribute ?
           current.getAttribute("name") :
           undefined;
+        if (!name) return;
         if (this.activeBar && this.activeBar.name === name) {
+          //再次点击 取消选中
           this.cancelActiveBar(name);
           //this.fce.navbars.setActiveBar("pointer");
           this.fce.navbars.setNavActiveBar("pointer");
-          //todo  取消选中
         } else if (name) {
           this.setActiveBar(name);
           //this.fce.navbars.cancelActiveBar(this.fce.navbars.activeBar.name);
           this.fce.navbars.setNavActiveBar();
           this.fireEvent("change", this.bars[name]);
         }
+        const bar = this.getBarByName(name);
+        if (bar && bar.options && bar.options.click) {
+          bar.options.click.call(this.fce, bar);
+        }
       }
     }.bind(self)
   );
 };
 const Toolbars = function(options) {
-  //todo 处理toolbar事件
   if (!options) return;
-  options = jquery.extend(true, defaultOptions, { bars: options });
-  if (!options.bars) {
-    options.bars = [];
+  if (!this.__private__) this.__private__ = {};
+  const _options = jquery.extend(true, defaultOptions, { bars: options });
+  if (!_options.bars) {
+    _options.bars = [];
   }
-  utils.forEach(options.bars, function(item, index) {
+  utils.forEach(_options.bars, function(item, index) {
     if (typeof item === "string") {
       const bar = ToolbarItems[item];
       if (bar) {
-        options.bars.splice(index, 1, bar);
+        _options.bars.splice(index, 1, bar);
       }
     } else {
       //对于自定义的bar，要给与其 className =barClassName
       const arr = utils.trim(item.className).split(/\s+/);
       if (!arr.includes(barClassName)) {
         arr.splice(0, 0, barClassName);
-        item.className = item.join(" ");
+        item.className = arr.join(" ");
       }
     }
   });
-  this.options = options;
+  this.options = _options;
   //bar的类型
   this.BarType = Toolbar;
-  this.__allListeners__ = {
+  this.__private__.allListeners = {
     change: [] //change事件
   };
   Basebars.call(this);

@@ -5,39 +5,111 @@ window.onload = function() {
     toolbars: [{
         name: "rectangle",
         icon: "images/rectangle.png",
-        className: "fce-tool-bar",
+        className: "",
         title: "矩形",
-        exec() {}
+        exec(evt, clickType, obj) {
+          const label = prompt("请输入节点名称："),
+            data = { id: new Date().getTime(), label: label };
+          if (!label) return;
+          if (clickType === "node") {
+            data.parent = obj.id;
+          }
+          this.addNode(data, "rectangle");
+        }
       },
       {
         name: "rounded_rectangle",
         icon: "images/rounded_rectangle.png",
-        className: "fce-tool-bar",
+        className: "",
         title: "圆角矩形",
-        exec() {}
+        exec(evt, clickType, obj) {
+          const label = prompt("请输入节点名称："),
+            data = { id: new Date().getTime(), label: label };
+          if (!label) return;
+          if (clickType === "node") {
+            data.parent = obj.id;
+          }
+          this.addNode(data, "roundrectangle");
+        }
       },
       {
         name: "choice",
         icon: "images/choice.png",
-        className: "fce-tool-bar",
+        className: "",
         title: "菱形",
-        exec() {}
+        exec(evt, clickType, obj) {
+          const label = prompt("请输入节点名称："),
+            data = { id: new Date().getTime(), label: label };
+          if (!label) return;
+          if (clickType === "node") {
+            data.parent = obj.id;
+          }
+          this.addNode(data, "diamond");
+        }
       },
-
       {
         name: "round",
         icon: "images/round.png",
-        className: "fce-tool-bar",
+        className: "",
         title: "圆形",
-        exec() {
-          debugger;
+        exec(evt, clickType, obj) {
+          const label = prompt("请输入节点名称："),
+            data = { id: new Date().getTime(), label: label };
+          if (!label) return;
+          if (clickType === "node") {
+            data.parent = obj.id;
+          }
+          this.addNode(data, "ellipse");
+        }
+      },
+      {
+        name: "download-json",
+        icon: "images/download.png",
+        className: "",
+        title: "下载json文件",
+        click(bar) {
+          this.exportFile("json", "导出JSON文件");
+          bar.cancelActive(); //取消自身选中
+        }
+      },
+      {
+        name: "download-png",
+        icon: "images/download.png",
+        className: "",
+        title: "下载png文件",
+        click(bar) {
+          this.exportFile("png");
+          bar.cancelActive(); //取消自身选中
+        }
+      },
+      {
+        name: "download-jpg",
+        icon: "images/download.png",
+        className: "",
+        title: "下载jpg文件",
+        click(bar) {
+          this.exportFile("jpg");
+          bar.cancelActive(); //取消自身选中
         }
       },
       "animation"
     ]
   });
-  fce.addListener("click", function() {
+  fce.addListener("add_click", function() {
     console.log("编辑器被点击！");
+  });
+  fce.addListener("context_menus_rename", function(type, evt, clickType, data) {
+    const label = prompt("请输入节点新名称：", data.label);
+    if (label) {
+      data.label = label;
+      this.rename(data);
+    }
+  });
+  fce.addListener("context_menus_remove", function(type, evt, clickType, data) {
+    if (confirm("您确定要删除该节点吗？")) {
+      debugger;
+      this.remove(data.id);
+    }
   });
 };
 

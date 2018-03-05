@@ -39,6 +39,22 @@ export default {
     }
   },
   /**
+   * 循环对象
+   * @param {Object} obj 被循环对象
+   * @param {Function} handler 回调函数，如返回true，则停止循环
+   */
+  forEachObject(obj, handler) {
+    if (!obj) return;
+    for (let key in obj) {
+      const item = obj[key];
+      if (handler) {
+        if (handler(item, key)) {
+          return;
+        }
+      }
+    }
+  },
+  /**
    * 想让找到符合要求的element元素
    * @param {Element} ele 元素
    * @param {String} classNames  样式
@@ -71,8 +87,8 @@ export default {
    * @param {Object} params
    */
   registerEvent(ele, type, handler, params) {
-    if (!ele) { 
-      console.error('绑定事件时Element实例为空！');
+    if (!ele) {
+      console.error("绑定事件时Element实例为空！");
       return;
     }
     if (ele.addEventListener) {

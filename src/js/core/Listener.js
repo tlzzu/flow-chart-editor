@@ -42,7 +42,7 @@ const removeListener = function(type, listener) {
  * @returns {Array} 返回一个数组
  */
 const getListener = function(type) {
-  const listeners = this.__allListeners__;
+  const listeners = this.__private__.allListeners;
   type = type.toLowerCase();
   if (listeners[type]) {
     return listeners[type];

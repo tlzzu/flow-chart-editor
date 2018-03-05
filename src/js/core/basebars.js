@@ -1,5 +1,5 @@
 //保证同时只能有一个触发事件
-import listener from "./Listener";
+import Listener from "./Listener";
 import utils from "../utils/index";
 import BaseBar from "./basebar";
 
@@ -26,17 +26,20 @@ const Basebars = function() {
   if (!this.options) {
     return;
   }
+  //if (!this.__private__) this.__private__ = {};
   this.BarType = this.BarType ? this.BarType : BaseBar;
   this.bars = {}; //basebars类型 所有的初始化的bar
   this.activeBar = null; //basebars类型 当前激活的bar
-  this.__allListeners__ = this.__allListeners__ || {}; //所有的change事件：change事件
+  this.__private__.allListeners = this.__private__.allListeners || {}; //所有的change事件：change事件
   const dom = document.createElement("div");
   dom.className = this.options.className;
   dom.classList.add("fce-base-bars");
   this.dom = dom;
 };
 //将事件管理器赋予BaseBars
-Basebars.prototype = listener;
+utils.forEachObject(Listener, function(item, key) {
+  Basebars.prototype[key] = item;
+});
 /**
  * 设置激活状态的bar
  * @param {String} name 当前bar的活动名
@@ -46,6 +49,14 @@ Basebars.prototype.setActiveBar = function(name) {
   this.cancelActiveBar(name);
   this.bars[name].addClass(this.options.activeClass);
   this.activeBar = this.bars[name];
+};
+/**
+ * 根据name获取bar
+ * @param {*} name
+ */
+Basebars.prototype.getBarByName = function(name) {
+  if (!name) return;
+  return this.bars[name];
 };
 Basebars.prototype.render = function() {
   initBars.call(this);

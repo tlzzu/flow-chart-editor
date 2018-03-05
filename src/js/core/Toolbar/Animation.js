@@ -2,7 +2,7 @@ import utils from "../../utils/index";
 export default {
   name: "animation",
   icon: require("../../../images/animation.png"),
-  className: "fce-tool-bar fce-tool-bar-animation",
+  className: "fce-tool-bar-animation",
   title: "动画",
   render() {
     const div = document.createElement("div");

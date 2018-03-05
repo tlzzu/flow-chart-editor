@@ -9,7 +9,7 @@ const MyHtmlwebpackPlugin = require("./MyHtmlwebpackPlugin.js");
 //设置排除项
 baseWebpackConfig.externals = {
   jquery: "jQuery",
-  "konva":"konva",
+  konva: "konva",
   cytoscape: "cytoscape",
   "cytoscape-node-resize": "nodeResize",
   "cytoscape-grid-guide": "gridGuide",
@@ -22,9 +22,9 @@ baseWebpackConfig.externals = {
 module.exports = merge(baseWebpackConfig, {
   plugins: [
     new webpack.DefinePlugin({
-      "process": {
+      process: {
         env: {
-          NODE_ENV: "prod"
+          NODE_ENV: '"prod"'
         }
       }
     }),
