@@ -13,7 +13,7 @@ const initBars = function() {
     const bar = new self.BarType(barOpt);
     self.dom.appendChild(bar.dom);
     if (bar.options.render) {
-      bar.options.render.call(bar);
+      bar.options.render.call(bar, self.fce, self);
     }
     self.bars[bar.name] = bar;
   });
