@@ -26,6 +26,10 @@
 
 ## 1. 预览-Preview
 
+预览效果如下：
+![ ](example/img/demo1.gif)
+![ ](example/img/demo2.gif)
+
 ## 2. 安装使用-Install
 
 ### npm 安装
@@ -39,9 +43,27 @@ npm i flow-chart-editor -S
 可在页面中引用
 
 ```
-import FCE from "flow-chart-ed";
+import FCE from "flow-chart-editor";
 
-var fce=new FCE(options...);
+var fce=new FCE({
+  el: document.getElementById("fce"),//初始化节点
+  toolbars: [{//自定义toolbar
+      name: "rectangle",//节点名称
+      icon: "images/rectangle.png",//toolbar的图片
+      className: "",//自定义样式
+      title: "矩形",//title值
+      exec(evt, clickType, obj) {//选中该节点后，点击编辑区域后被触发事件
+        const label = prompt("请输入节点名称："),
+          data = { id: new Date().getTime(), label: label };
+        if (!label) return;
+        if (clickType === "node") {
+          data.parent = obj.id;
+        }
+        this.addNode(data, "rectangle");
+      }
+    },  
+    "animation"]//这里FCE内置的一种制作流程动画组件
+  });
 ```
 
 ### 脚本引用
@@ -50,14 +72,43 @@ var fce=new FCE(options...);
 <!DOCTYPE html>
 <html>
   <head>
-    <title>flow-chart-editor</title>
-    <script src="js/fce.1.0.0.min.js">
+    <title>flow-chart-editor流程编辑器</title>
+    <link href="css/cytoscape-context-menus.css" rel="stylesheet">
+    <link href="css/fce.1.0.0.min.css?a643cc98a261f0b1586b" rel="stylesheet">
+    <script type="text/javascript" src="js/lib/cytoscape.js"></script>
+    <script type="text/javascript" src="js/lib/jquery.js"></script>
+    <script type="text/javascript" src="js/lib/konva.min.js"></script>
+    <script type="text/javascript" src="js/lib/cytoscape-node-resize.js"></script>
+    <script type="text/javascript" src="js/lib/cytoscape-grid-guide.js"></script>
+    <script type="text/javascript" src="js/lib/cytoscape-edgehandles.js"></script>
+    <script type="text/javascript" src="js/lib/cytoscape-context-menus.js"></script>
+    <script type="text/javascript" src="js/lib/cytoscape-edge-bend-editing.js"></script>
+    <script type="text/javascript" src="js/lib/cytoscape-undo-redo.js"></script>
+    <script type="text/javascript" src="js/lib/cytoscape-view-utilities.js"></script>
+    <script type="text/javascript" src="js/fce.1.0.0.min.js?a643cc98a261f0b1586b"></script>
   </head>
   <body>
     <div id="fce"></div>
     <script>
-        var fce=new FCE(options...);
-        ...
+      var fce=new FCE({
+        el: document.getElementById("fce"),//初始化节点
+        toolbars: [{//自定义toolbar
+          name: "rectangle",//节点名称
+          icon: "images/rectangle.png",//toolbar的图片
+          className: "",//自定义样式
+          title: "矩形",//title值
+          exec(evt, clickType, obj) {//选中该节点后，点击编辑区域后被触发事件
+            const label = prompt("请输入节点名称："),
+              data = { id: new Date().getTime(), label: label };
+            if (!label) return;
+            if (clickType === "node") {
+              data.parent = obj.id;
+            }
+            this.addNode(data, "rectangle");
+          }
+        },  
+        "animation"]//这里FCE内置的一种制作流程动画组件
+      });
     </script>
   </body>
 </html>
@@ -67,10 +118,14 @@ var fce=new FCE(options...);
 
 二次开发前请确保已经安装`node`及`webpack`。在控制台中执行 `npm run <target>`，其中：
 
-* `dev`：开发模式
-* `build`：执行打包
+* `dev`：开发模式，执行后可直接访问[http://localhost:9110/](http://localhost:9110/)直接调试。
+* `build`：执行打包，dist 中的文件会重新打包。
 
 ## 4. 文档-Document
+
+```
+//todo 稍后完善。
+```
 
 ## 5. 依赖-Dependencies
 
@@ -92,7 +147,7 @@ var fce=new FCE(options...);
 
 ## 6. 捐赠-Donation
 
-如果觉得有用可赏杯咖啡。
+表示您对本项目的支持
 ![image](https://github.com/tlzzu/SoDiaoEditor.v2/raw/master/data/img/ds.png)
 
 ## 7. 许可证-LICENSE
