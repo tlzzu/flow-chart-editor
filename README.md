@@ -1,4 +1,8 @@
-# flow-chart-editor
+# flow-chart-editor 流程设计器
+
+## 背景
+
+最近做的项目中有流程设计这个功能，且要求设计器具有可嵌套子流程功能，业务比较复杂，当时没有找到合适的设计器，最后选型 cytoscapejs，用 vue 架构了一个流程设计器，不过相对而言太复杂，业务特征太明显，故计划年后做出版较为通用的流程设计器，且增加演示动画功能（待完善）。本文是对目前所做设计器的一个展示。后续还会继续完善。
 
 [![npm](https://img.shields.io/npm/v/flow-chart-editor.svg?maxAge=3600)](https://www.npmjs.com/package/flow-chart-editor)
 [![NPM downloads](http://img.shields.io/npm/dm/flow-chart-editor.svg)](https://npmjs.org/package/flow-chart-editor)
@@ -6,18 +10,19 @@
 ![CSS gzip size](http://img.badgesize.io/tlzzu/flow-chart-editor/master/lib/style.css.svg?compression=gzip&label=gzip%20size:%20CSS)
 [![Join the chat at https://gitter.im/tlzzu/flow-chart-editor](https://badges.gitter.im/tlzzu/flow-chart-editor.svg)](https://gitter.im/tlzzu/flow-chart-editor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-基于[cytoscape.js](https://github.com/cytoscape/cytoscape.js)的流程设计器。[演示文档 Demo](https://tlzzu.github.io/flow-chart-editor/dist/index.html)。
+基于[cytoscape.js](https://github.com/cytoscape/cytoscape.js)的流程设计器。[演示文档 Demo](https://tlzzu.github.io/flow-chart-editor/dist/index.html)。已纳入 SoDiao 豪华套餐。(_^▽^_)
 
 优点如下：
-`
 
+```
 1.  支持实/虚线、连线弯曲、撤销重做、放大缩小;
 2.  可导出 json/png/jpg 文档；
-3.  允许在流程中嵌套**子流程**；
-4.  支持只读、设计两种模式（敬请期待）;
-5.  支持设置**流程动画**（敬请期待）;
-6.  ……
-    `
+3.  toolbar自定义；
+4.  允许在流程中嵌套**子流程**；
+5.  支持只读、设计两种模式（敬请期待）;
+6.  支持设置**流程动画**（敬请期待）;
+7.  ……后续再完善……
+```
 
 > 在此，感谢 easyicon.net 提供的图标。
 
@@ -31,17 +36,19 @@
 
 [5. 依赖-Dependencies](#5-依赖-dependencies)
 
-[6. 捐赠-Donation](#6-捐赠-donation)
+[6. 错误提交-Bug](#6-错误提交-bug)
 
-[7. 许可证-LICENSE](#7-许可证-license)
+[7. 捐赠-Donation](#6-捐赠-donation)
+
+[8. 许可证-LICENSE](#7-许可证-license)
 
 ## 1. 预览-Preview
 
 预览效果如下：
-![ ](example/img/demo1.gif)
-![ ](example/img/demo2.gif)
-![ ](example/img/demo3.gif)
-![ ](example/img/demo4.gif)
+![](https://images2018.cnblogs.com/blog/544734/201803/544734-20180309005503770-1121231687.gif)
+![](https://images2018.cnblogs.com/blog/544734/201803/544734-20180309005628409-455120421.gif)
+![](https://images2018.cnblogs.com/blog/544734/201803/544734-20180309005635324-1573303451.gif)
+![](https://images2018.cnblogs.com/blog/544734/201803/544734-20180309005652863-1604639382.gif)
 
 ## 2. 安装使用-Install
 
@@ -85,7 +92,7 @@ var fce=new FCE({
 <!DOCTYPE html>
 <html>
   <head>
-    <title>flow-chart-editor流程编辑器</title>
+    <title>flow-chart-editor流程设计器</title>
     <link href="css/cytoscape-context-menus.css" rel="stylesheet">
     <link href="css/fce.1.0.0.min.css?a643cc98a261f0b1586b" rel="stylesheet">
     <script type="text/javascript" src="js/lib/cytoscape.js"></script>
@@ -158,11 +165,21 @@ var fce=new FCE({
 
 [cytoscape.js-undo-redo ^1.0.1](https://github.com/iVis-at-Bilkent/cytoscape.js-undo-redo)
 
-## 6. 捐赠-Donation
+## 6. 错误提交-Bug
+
+`
+
+1.  可邮件至[dd@sodiao.org](mailto://dd@sodiao.org/)；
+2.  可以在 github 中的[ISS](https://github.com/tlzzu/flow-chart-editor/issues)中提交；
+    `
+
+## 7. 捐赠-Donation
 
 表示您对本项目的支持
 ![image](https://github.com/tlzzu/SoDiaoEditor.v2/raw/master/data/img/ds.png)
 
-## 7. 许可证-LICENSE
+## 8. 许可证-LICENSE
 
 MIT.
+
+欢迎下载适用！
