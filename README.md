@@ -6,7 +6,18 @@
 ![CSS gzip size](http://img.badgesize.io/tlzzu/flow-chart-editor/master/lib/style.css.svg?compression=gzip&label=gzip%20size:%20CSS)
 [![Join the chat at https://gitter.im/tlzzu/flow-chart-editor](https://badges.gitter.im/tlzzu/flow-chart-editor.svg)](https://gitter.im/tlzzu/flow-chart-editor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-基于[cytoscape.js](https://github.com/cytoscape/cytoscape.js)的流程设计器，优点是可以在流程节点中嵌套子流程，支持实/虚线、连线弯曲、撤销重做、放大缩小，导出 json/png/jpg 文档等。[演示文档 Demo](https://tlzzu.github.io/flow-chart-editor/dist/index.html)
+基于[cytoscape.js](https://github.com/cytoscape/cytoscape.js)的流程设计器。[演示文档 Demo](https://tlzzu.github.io/flow-chart-editor/dist/index.html)。
+
+优点如下：
+`
+
+1.  支持实/虚线、连线弯曲、撤销重做、放大缩小;
+2.  可导出 json/png/jpg 文档；
+3.  允许在流程中嵌套**子流程**；
+4.  支持只读、设计两种模式（敬请期待）;
+5.  支持设置**流程动画**（敬请期待）;
+6.  ……
+    `
 
 > 在此，感谢 easyicon.net 提供的图标。
 
@@ -29,6 +40,8 @@
 预览效果如下：
 ![ ](example/img/demo1.gif)
 ![ ](example/img/demo2.gif)
+![ ](example/img/demo3.gif)
+![ ](example/img/demo4.gif)
 
 ## 2. 安装使用-Install
 
