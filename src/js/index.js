@@ -1,5 +1,5 @@
 //"use strict";
-//require("../css/default.scss");
+require("../css/default.scss");
 import { defaultOptions } from "./defaultOptions";
 import utils from "./utils/index";
 import { jquery } from "./lib";
