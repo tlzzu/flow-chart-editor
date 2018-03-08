@@ -3,7 +3,7 @@ if (process.env.NODE_ENV === "prod") {
   cytoscape = window.cytoscape;
   jquery = window.jQuery;
 } else {
-  require("../../static/css/cytoscape-context-menus.css");
+  //require("../../static/css/cytoscape-context-menus.css");
   cytoscape = require("cytoscape");
   jquery = require("jquery");
   const cytoscape_grid = require("cytoscape-grid-guide");

@@ -95,6 +95,11 @@ $z-index: 1000;
       border-color: #b4bccc;
     }
   }
+  @mixin btn-bar {
+    float: left;
+    line-height: 35px;
+    padding: 0 10px;
+  }
   .fce-toolbars {
     @include absolute-position;
     @include display-flex-1;
@@ -104,9 +109,7 @@ $z-index: 1000;
     border-top: 0;
     .fce-tool-bars {
       .fce-base-bar {
-        float: left;
-        line-height: 35px;
-        padding: 0 10px;
+        @include btn-bar;
         img {
           width: 20px;
           height: 20px;
@@ -149,6 +152,11 @@ $z-index: 1000;
   .fce-base-bars {
     .fce-base-bar {
       @include bar-cursor;
+    }
+  }
+  .fce-tool-bar-ext {
+    .bar-auto_play {
+      @include btn-bar;
     }
   }
   .fce-navbar {

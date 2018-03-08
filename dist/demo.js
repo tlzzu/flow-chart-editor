@@ -92,6 +92,38 @@ window.onload = function() {
           bar.cancelActive(); //取消自身选中
         }
       },
+
+      {
+        name: "import",
+        icon: "images/import.png",
+        className: "",
+        title: "导入JSON文件",
+        click(bar) {
+          bar.cancelActive(); //取消自身选中
+          var file = document.createElement("input"),self=this;
+          file.setAttribute("type", "file");
+          file.onchange = function(evt) {
+            var target = evt.target;
+            if (target.files && target.files.length) {
+              var fileInfo = target.files[0],
+                name = fileInfo.name;
+              if (!name.toLowerCase().endsWith(".json")) {
+                alert("上传文件类型不符合要求！");
+              } else {
+                var reader = new FileReader();
+                reader.onload = function(evt) {
+                  var json = JSON.parse(evt.target.result.toString());
+                  self.import(json);
+                };
+                reader.readAsText(fileInfo);
+              }
+            }
+          };
+          file.click();
+          // this.import(json);
+          // bar.cancelActive(); //取消自身选中
+        }
+      },
       "animation"
     ]
   });

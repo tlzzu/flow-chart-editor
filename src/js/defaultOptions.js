@@ -31,6 +31,7 @@ const toolbarOption = {
  */
 const defaultOptions = {
   el: null,
+  mode: "DESIGN",
   ready() {
     console.log("fce加载完成！");
   },

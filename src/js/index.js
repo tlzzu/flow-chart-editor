@@ -1,5 +1,5 @@
 //"use strict";
-require("../css/default.scss");
+//require("../css/default.scss");
 import { defaultOptions } from "./defaultOptions";
 import utils from "./utils/index";
 import { jquery } from "./lib";
@@ -97,6 +97,20 @@ FCE.prototype.getElementById = function (id) {
  */
 FCE.prototype.add = function(opt) {
   this.cy.add(opt);
+};
+/**
+ * 设置模式
+ * @param {String} mode  可选，如果为空则为获取当前模式，否则就是设置为指定模式。READONLY只读--查看、DESIGN设计--可编辑
+ */
+FCE.prototype.mode = function (mode) {
+  if (mode) {
+    mode = utils.trim(mode).toUpperCase();
+    //todo 修改模式
+    this.__private__.options.mode = mode;
+  } else {
+    // 获取当前模式
+    return this.__private__.options.mode;    
+  }
 };
 /**
  * 添加node
