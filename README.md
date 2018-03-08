@@ -153,25 +153,10 @@ var fce=new FCE({
 
 [cytoscape ^3.2.0](https://github.com/cytoscape/cytoscape.js)
 
-[cytoscape-context-menus ^3.0.5](https://github.com/iVis-at-Bilkent/cytoscape.js-context-menus)
-
-[cytoscape-edge-bend-editing ^1.5.4](https://github.com/iVis-at-Bilkent/cytoscape.js-edge-bend-editing)
-
-[cytoscape-edgehandles ^3.0.2](https://github.com/cytoscape/cytoscape.js-edgehandles)
-
-[cytoscape-grid-guide ^2.0.5](https://github.com/iVis-at-Bilkent/cytoscape.js-grid-guide)
-
-[cytoscape-view-utilities ^2.0.7](https://github.com/iVis-at-Bilkent/cytoscape.js-view-utilities)
-
-[cytoscape.js-undo-redo ^1.0.1](https://github.com/iVis-at-Bilkent/cytoscape.js-undo-redo)
-
 ## 6. 错误提交-Bug
-
-`
 
 1.  可邮件至[dd@sodiao.org](mailto://dd@sodiao.org/)；
 2.  可以在 github 中的[ISS](https://github.com/tlzzu/flow-chart-editor/issues)中提交；
-    `
 
 ## 7. 捐赠-Donation
 
