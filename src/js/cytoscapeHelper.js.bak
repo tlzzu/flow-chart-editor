@@ -208,7 +208,7 @@ const initCy = function(options) {
       },
       hasTrailingDivider: true
     }];
-  
+
   if (options && options.rightMenus && options.rightMenus.length > 0) {
     for (let i = 0, l = options.rightMenus.length; i < l; i++) {
       const notexist = options.rightMenus[i];
