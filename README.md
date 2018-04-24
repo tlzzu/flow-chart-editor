@@ -122,7 +122,7 @@ var fce=new FCE({
             alert('弹出信息！');
           },
           hasTrailingDivider: true
-        }],
+        }], 
         toolbars: [{//自定义toolbar
           name: "rectangle",//节点名称
           icon: "images/rectangle.png",//toolbar的图片
