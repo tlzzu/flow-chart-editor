@@ -112,6 +112,17 @@ var fce=new FCE({
     <script>
       var fce=new FCE({
         el: document.getElementById("fce"),//初始化节点
+        rightMenus:[{
+          id: "id_alert",
+          content: "弹出窗",
+          tooltipText: "弹出窗",
+          selector: "node,edge",//当在node,edge元素上右键时才显示
+          onClickFunction: function(evt) {//点击后触发事件
+            var target = evt.target || evt.cyTarget;
+            alert('弹出信息！');
+          },
+          hasTrailingDivider: true
+        }],
         toolbars: [{//自定义toolbar
           name: "rectangle",//节点名称
           icon: "images/rectangle.png",//toolbar的图片

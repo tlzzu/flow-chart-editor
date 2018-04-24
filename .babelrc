@@ -1,3 +1,13 @@
 {
-  "presets": ["es2015"]
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "browsers": ["IE >= 8"]
+        },
+        "useBuiltIns": true
+      }
+    ]
+  ]
 }

@@ -6,7 +6,7 @@
 //  * beforeAddNode：新加node节点之前
 //  * afterAddNode：加入node之后
 //  */
-import utils from "../utils/index";
+import utils from '../utils/index';
 
 /**
  * 添加事件监听
@@ -47,7 +47,7 @@ const getListener = function(type) {
   if (listeners[type]) {
     return listeners[type];
   } else {
-    console.error("不存在该[" + type + "]类型事件！");
+    console.error('不存在该[' + type + ']类型事件！');
     console.trace();
     return [];
   }
@@ -56,10 +56,8 @@ const getListener = function(type) {
 /**
  * 触发事件
  */
-const fireEvent = function() {
-  const args = arguments,
-    types = args[0],
-    self = this,
+const fireEvent = function(types, ...args) {
+  const self = this,
     typeArray = utils.classNamesToArray(types);
   if (!typeArray && !typeArray.length) return;
   utils.forEach(typeArray, function(type) {

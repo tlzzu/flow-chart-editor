@@ -22,113 +22,113 @@ const cyOption = {
         // width: 'mapData(weight, 40, 80, 20, 60)',
         "text-valign": "center"
       }
-  },
-  {
-    selector: "node.fce-shape-ellipse",
-    style: {
-       shape: 'ellipse',
-    }
+    },
+    {
+      selector: "node.fce-shape-ellipse",
+      style: {
+        shape: 'ellipse',
+      }
     },
     {
       selector: "node.fce-shape-triangle",
       style: {
-         shape: 'triangle',
+        shape: 'triangle',
       }
     },
     {
       selector: "node.fce-shape-rectangle",
       style: {
-         shape: 'rectangle',
+        shape: 'rectangle',
       }
     },
     {
       selector: "node.fce-shape-roundrectangle",
       style: {
-         shape: 'roundrectangle',
+        shape: 'roundrectangle',
       }
     },
     {
       selector: "node.fce-shape-bottomroundrectangle",
       style: {
-         shape: 'bottomroundrectangle',
+        shape: 'bottomroundrectangle',
       }
     },
     {
       selector: "node.fce-shape-cutrectangle",
       style: {
-         shape: 'cutrectangle',
+        shape: 'cutrectangle',
       }
     },
     {
       selector: "node.fce-shape-barrel",
       style: {
-         shape: 'barrel',
+        shape: 'barrel',
       }
     },
     {
       selector: "node.fce-shape-rhomboid",
       style: {
-         shape: 'rhomboid',
+        shape: 'rhomboid',
       }
     },
     {
       selector: "node.fce-shape-diamond",
       style: {
-         shape: 'diamond',
+        shape: 'diamond',
       }
     },
     {
       selector: "node.fce-shape-pentagon",
       style: {
-         shape: 'pentagon',
+        shape: 'pentagon',
       }
     },
     {
       selector: "node.fce-shape-hexagon",
       style: {
-         shape: 'hexagon',
+        shape: 'hexagon',
       }
     },
     {
       selector: "node.fce-shape-concavehexagon",
       style: {
-         shape: 'concavehexagon',
+        shape: 'concavehexagon',
       }
     },
     {
       selector: "node.fce-shape-heptagon",
       style: {
-         shape: 'heptagon',
+        shape: 'heptagon',
       }
     },
     {
       selector: "node.fce-shape-octagon",
       style: {
-         shape: 'octagon',
+        shape: 'octagon',
       }
     },
     {
       selector: "node.fce-shape-star",
       style: {
-         shape: 'star',
+        shape: 'star',
       }
     },
     {
       selector: "node.fce-shape-tag",
       style: {
-         shape: 'tag',
+        shape: 'tag',
       }
     },
     {
       selector: "node.fce-shape-vee",
       style: {
-         shape: 'vee',
+        shape: 'vee',
       }
     },
     {
       selector: "node.fce-shape-polygon",
       style: {
-         shape: 'polygon',
+        shape: 'polygon',
       }
     },
     {
@@ -180,9 +180,55 @@ const cyOption = {
  */
 const initCy = function(options) {
   options = jquery.extend(true, cyOption, options);
+  //右键配置加载
+
   const self = this,
     cy = new cytoscape(options),
-    gridGuide = cy.gridGuide({
+    //默认右键配置
+    rightMenus = [{
+      id: "fce_rename",
+      content: "重命名",
+      tooltipText: "重命名",
+      selector: "node,edge",
+      onClickFunction: function(evt) {
+        var target = evt.target || evt.cyTarget,
+          clickType = getClickType(evt);
+        self.fireEvent('context_menus_rename', evt, clickType, target.data());
+      },
+      hasTrailingDivider: true
+    }, {
+      id: "fce_delete",
+      content: "删除",
+      tooltipText: "删除",
+      selector: "node,edge",
+      onClickFunction: function(evt) {
+        var target = evt.target || evt.cyTarget,
+          clickType = getClickType(evt);
+        self.fireEvent('context_menus_remove', evt, clickType, target.data());
+      },
+      hasTrailingDivider: true
+    }];
+  if (options && options.rightMenus && options.rightMenus.length > 0) {
+    for (let i = 0, l = options.rightMenus.length; i < l; i++) {
+      const notexist = options.rightMenus[i];
+      let have = false;
+      for (let h = 0, count = rightMenus.length; h < count; h++) {
+        const exist = rightMenus[h];
+        if (notexist.id === exist.id) {
+          have = true;
+          break;
+        }
+      }
+      if (have) {
+        console.error('已存在id=' + notexist.id + '相同的右键按钮!');
+      } else {
+        rightMenus.push(notexist);
+      }
+    }
+  }
+
+
+  const gridGuide = cy.gridGuide({
       //网格功能
       //snapToGridDuringDrag: true, //todo 为了操作的灵活性，暂时去掉对齐功能
       snapToAlignmentLocationOnRelease: true,
@@ -198,27 +244,7 @@ const initCy = function(options) {
     }),
     //右键 contextMenus
     contextMenus = cy.contextMenus({
-      menuItems: [{
-        id: "fce_rename",
-        content: "重命名",
-        tooltipText: "重命名",
-        selector: "node,edge", 
-        onClickFunction: function(evt) {
-          var target = evt.target || evt.cyTarget,clickType=getClickType(evt);
-          self.fireEvent('context_menus_rename', evt, clickType, target.data());
-        },
-        hasTrailingDivider:true
-      },{
-        id: "fce_delete",
-        content: "删除",
-        tooltipText: "删除",
-        selector: "node,edge", 
-        onClickFunction: function(evt) {
-          var target = evt.target || evt.cyTarget,clickType=getClickType(evt);
-          self.fireEvent('context_menus_remove', evt, clickType, target.data());
-        },
-        hasTrailingDivider:true
-      }]
+      menuItems: rightMenus
     }),
     //连线
     edgehandles = cy.edgehandles({

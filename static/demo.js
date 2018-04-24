@@ -1,114 +1,115 @@
 var fce;
 window.onload = function() {
   fce = new FCE({
-    el: document.getElementById("fce"),
+    el: document.getElementById('fce'),
     toolbars: [{
-        name: "rectangle",
-        icon: "images/rectangle.png",
-        className: "",
-        title: "矩形",
-        exec(evt, clickType, obj) {
-          const label = prompt("请输入节点名称："),
+        name: 'rectangle',
+        icon: 'images/rectangle.png',
+        className: '',
+        title: '矩形',
+        exec:function(evt, clickType, obj) {
+          const label = prompt('请输入节点名称：'),
             data = { id: new Date().getTime(), label: label };
           if (!label) return;
-          if (clickType === "node") {
+          if (clickType === 'node') {
             data.parent = obj.id;
           }
-          this.addNode(data, "rectangle");
-        }
+          this.addNode(data, 'rectangle');
+        },
       },
       {
-        name: "rounded_rectangle",
-        icon: "images/rounded_rectangle.png",
-        className: "",
-        title: "圆角矩形",
-        exec(evt, clickType, obj) {
-          const label = prompt("请输入节点名称："),
+        name: 'rounded_rectangle',
+        icon: 'images/rounded_rectangle.png',
+        className: '',
+        title: '圆角矩形',
+        exec:function(evt, clickType, obj) {
+          const label = prompt('请输入节点名称：'),
             data = { id: new Date().getTime(), label: label };
           if (!label) return;
-          if (clickType === "node") {
+          if (clickType === 'node') {
             data.parent = obj.id;
           }
-          this.addNode(data, "roundrectangle");
-        }
+          this.addNode(data, 'roundrectangle');
+        },
       },
       {
-        name: "choice",
-        icon: "images/choice.png",
-        className: "",
-        title: "菱形",
-        exec(evt, clickType, obj) {
-          const label = prompt("请输入节点名称："),
+        name: 'choice',
+        icon: 'images/choice.png',
+        className: '',
+        title: '菱形',
+        exec:function(evt, clickType, obj) {
+          const label = prompt('请输入节点名称：'),
             data = { id: new Date().getTime(), label: label };
           if (!label) return;
-          if (clickType === "node") {
+          if (clickType === 'node') {
             data.parent = obj.id;
           }
-          this.addNode(data, "diamond");
-        }
+          this.addNode(data, 'diamond');
+        },
       },
       {
-        name: "round",
-        icon: "images/round.png",
-        className: "",
-        title: "圆形",
-        exec(evt, clickType, obj) {
-          const label = prompt("请输入节点名称："),
+        name: 'round',
+        icon: 'images/round.png',
+        className: '',
+        title: '圆形',
+        exec:function(evt, clickType, obj) {
+          const label = prompt('请输入节点名称：'),
             data = { id: new Date().getTime(), label: label };
           if (!label) return;
-          if (clickType === "node") {
+          if (clickType === 'node') {
             data.parent = obj.id;
           }
-          this.addNode(data, "ellipse");
-        }
+          this.addNode(data, 'ellipse');
+        },
       },
       {
-        name: "download-json",
-        icon: "images/download.png",
-        className: "",
-        title: "下载json文件",
-        click(bar) {
-          this.exportFile("json", "导出JSON文件");
+        name: 'download-json',
+        icon: 'images/download.png',
+        className: '',
+        title: '下载json文件',
+        click:function(bar) {
+          this.exportFile('json', '导出JSON文件');
           bar.cancelActive(); //取消自身选中
-        }
+        },
       },
       {
-        name: "download-png",
-        icon: "images/download.png",
-        className: "",
-        title: "下载png文件",
-        click(bar) {
-          this.exportFile("png");
+        name: 'download-png',
+        icon: 'images/download.png',
+        className: '',
+        title: '下载png文件',
+        click:function(bar) {
+          this.exportFile('png');
           bar.cancelActive(); //取消自身选中
-        }
+        },
       },
       {
-        name: "download-jpg",
-        icon: "images/download.png",
-        className: "",
-        title: "下载jpg文件",
-        click(bar) {
-          this.exportFile("jpg");
+        name: 'download-jpg',
+        icon: 'images/download.png',
+        className: '',
+        title: '下载jpg文件',
+        click:function(bar) {
+          this.exportFile('jpg');
           bar.cancelActive(); //取消自身选中
-        }
+        },
       },
 
       {
-        name: "import",
-        icon: "images/import.png",
-        className: "",
-        title: "导入JSON文件",
-        click(bar) {
+        name: 'import',
+        icon: 'images/import.png',
+        className: '',
+        title: '导入JSON文件',
+        click:function(bar) {
           bar.cancelActive(); //取消自身选中
-          var file = document.createElement("input"),self=this;
-          file.setAttribute("type", "file");
+          var file = document.createElement('input'),
+            self = this;
+          file.setAttribute('type', 'file');
           file.onchange = function(evt) {
             var target = evt.target;
             if (target.files && target.files.length) {
               var fileInfo = target.files[0],
                 name = fileInfo.name;
-              if (!name.toLowerCase().endsWith(".json")) {
-                alert("上传文件类型不符合要求！");
+              if (!name.toLowerCase().endsWith('.json')) {
+                alert('上传文件类型不符合要求！');
               } else {
                 var reader = new FileReader();
                 reader.onload = function(evt) {
@@ -122,23 +123,24 @@ window.onload = function() {
           file.click();
           // this.import(json);
           // bar.cancelActive(); //取消自身选中
-        }
+        },
       },
-      "animation"
-    ]
+      'animation',
+    ],
   });
-  fce.addListener("add_click", function() {
-    console.log("编辑器被点击！");
+  fce.addListener('add_click', function() {
+    debugger;
+    console.log('编辑器被点击！');
   });
-  fce.addListener("context_menus_rename", function(type, evt, clickType, data) {
-    const label = prompt("请输入节点新名称：", data.label);
+  fce.addListener('context_menus_rename', function(type, evt, clickType, data) {
+    const label = prompt('请输入节点新名称：', data.label);
     if (label) {
       data.label = label;
       this.rename(data);
     }
   });
-  fce.addListener("context_menus_remove", function(type, evt, clickType, data) {
-    if (confirm("您确定要删除该节点吗？")) {
+  fce.addListener('context_menus_remove', function(type, evt, clickType, data) {
+    if (confirm('您确定要删除该节点吗？')) {
       debugger;
       this.remove(data.id);
     }
