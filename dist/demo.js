@@ -2,23 +2,23 @@ var fce;
 window.onload = function() {
   fce = new FCE({
     el: document.getElementById('fce'),
-     rightMenus:[{
-          id: "id_alert",
-          content: "弹出窗",
-          tooltipText: "弹出窗",
-          selector: "node,edge",//当在node,edge元素上右键时才显示
-          onClickFunction: function(evt) {//点击后触发事件
-            var target = evt.target || evt.cyTarget;
-            alert('弹出信息！');
-          },
-          hasTrailingDivider: true
-        }], 
+    rightMenus: [{
+      id: "id_alert",
+      content: "弹出窗",
+      tooltipText: "弹出窗",
+      selector: "node,edge", //当在node,edge元素上右键时才显示
+      onClickFunction: function(evt) { //点击后触发事件
+        var target = evt.target || evt.cyTarget;
+        alert('弹出信息！');
+      },
+      hasTrailingDivider: true
+    }],
     toolbars: [{
         name: 'rectangle',
         icon: 'images/rectangle.png',
         className: '',
         title: '矩形',
-        exec:function(evt, clickType, obj) {
+        exec: function(evt, clickType, obj) {
           const label = prompt('请输入节点名称：'),
             data = { id: new Date().getTime(), label: label };
           if (!label) return;
@@ -33,7 +33,7 @@ window.onload = function() {
         icon: 'images/rounded_rectangle.png',
         className: '',
         title: '圆角矩形',
-        exec:function(evt, clickType, obj) {
+        exec: function(evt, clickType, obj) {
           const label = prompt('请输入节点名称：'),
             data = { id: new Date().getTime(), label: label };
           if (!label) return;
@@ -48,7 +48,7 @@ window.onload = function() {
         icon: 'images/choice.png',
         className: '',
         title: '菱形',
-        exec:function(evt, clickType, obj) {
+        exec: function(evt, clickType, obj) {
           const label = prompt('请输入节点名称：'),
             data = { id: new Date().getTime(), label: label };
           if (!label) return;
@@ -63,7 +63,7 @@ window.onload = function() {
         icon: 'images/round.png',
         className: '',
         title: '圆形',
-        exec:function(evt, clickType, obj) {
+        exec: function(evt, clickType, obj) {
           const label = prompt('请输入节点名称：'),
             data = { id: new Date().getTime(), label: label };
           if (!label) return;
@@ -78,7 +78,7 @@ window.onload = function() {
         icon: 'images/download.png',
         className: '',
         title: '下载json文件',
-        click:function(bar) {
+        click: function(bar) {
           this.exportFile('json', '导出JSON文件');
           bar.cancelActive(); //取消自身选中
         },
@@ -88,7 +88,7 @@ window.onload = function() {
         icon: 'images/download.png',
         className: '',
         title: '下载png文件',
-        click:function(bar) {
+        click: function(bar) {
           this.exportFile('png');
           bar.cancelActive(); //取消自身选中
         },
@@ -98,7 +98,7 @@ window.onload = function() {
         icon: 'images/download.png',
         className: '',
         title: '下载jpg文件',
-        click:function(bar) {
+        click: function(bar) {
           this.exportFile('jpg');
           bar.cancelActive(); //取消自身选中
         },
@@ -109,7 +109,7 @@ window.onload = function() {
         icon: 'images/import.png',
         className: '',
         title: '导入JSON文件',
-        click:function(bar) {
+        click: function(bar) {
           bar.cancelActive(); //取消自身选中
           var file = document.createElement('input'),
             self = this;
@@ -143,14 +143,14 @@ window.onload = function() {
     debugger;
     console.log('编辑器被点击！');
   });
-  fce.addListener('context_menus_rename', function(type, evt, clickType, data) {
+  fce.addListener('context_menus_rename', function(evt, clickType, data) {
     const label = prompt('请输入节点新名称：', data.label);
     if (label) {
       data.label = label;
       this.rename(data);
     }
   });
-  fce.addListener('context_menus_remove', function(type, evt, clickType, data) {
+  fce.addListener('context_menus_remove', function(evt, clickType, data) {
     if (confirm('您确定要删除该节点吗？')) {
       debugger;
       this.remove(data.id);
